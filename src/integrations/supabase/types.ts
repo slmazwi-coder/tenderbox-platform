@@ -14,7 +14,335 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bids: {
+        Row: {
+          bbbee_score: number | null
+          compliance_score: number | null
+          contractor_id: string | null
+          functionality_score: number | null
+          id: string
+          price_score: number | null
+          rank: number | null
+          red_flags: string | null
+          status: string | null
+          submission_timestamp: string | null
+          tender_id: string | null
+          total_bid_price: number | null
+          total_score: number | null
+          tracking_id: string | null
+        }
+        Insert: {
+          bbbee_score?: number | null
+          compliance_score?: number | null
+          contractor_id?: string | null
+          functionality_score?: number | null
+          id?: string
+          price_score?: number | null
+          rank?: number | null
+          red_flags?: string | null
+          status?: string | null
+          submission_timestamp?: string | null
+          tender_id?: string | null
+          total_bid_price?: number | null
+          total_score?: number | null
+          tracking_id?: string | null
+        }
+        Update: {
+          bbbee_score?: number | null
+          compliance_score?: number | null
+          contractor_id?: string | null
+          functionality_score?: number | null
+          id?: string
+          price_score?: number | null
+          rank?: number | null
+          red_flags?: string | null
+          status?: string | null
+          submission_timestamp?: string | null
+          tender_id?: string | null
+          total_bid_price?: number | null
+          total_score?: number | null
+          tracking_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bids_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bids_tender_id_fkey"
+            columns: ["tender_id"]
+            isOneToOne: false
+            referencedRelation: "tenders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefing_attendance: {
+        Row: {
+          attendance_confirmed: boolean
+          attendee_designation: string | null
+          attendee_name: string | null
+          contractor_id: string | null
+          id: string
+          sign_in_time: string | null
+          sign_out_time: string | null
+          tender_id: string | null
+        }
+        Insert: {
+          attendance_confirmed?: boolean
+          attendee_designation?: string | null
+          attendee_name?: string | null
+          contractor_id?: string | null
+          id?: string
+          sign_in_time?: string | null
+          sign_out_time?: string | null
+          tender_id?: string | null
+        }
+        Update: {
+          attendance_confirmed?: boolean
+          attendee_designation?: string | null
+          attendee_name?: string | null
+          contractor_id?: string | null
+          id?: string
+          sign_in_time?: string | null
+          sign_out_time?: string | null
+          tender_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_attendance_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "briefing_attendance_tender_id_fkey"
+            columns: ["tender_id"]
+            isOneToOne: false
+            referencedRelation: "tenders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      compliance_documents: {
+        Row: {
+          contractor_id: string | null
+          doc_type: string | null
+          expiry_date: string | null
+          id: string
+          upload_date: string
+          verification_status: string | null
+        }
+        Insert: {
+          contractor_id?: string | null
+          doc_type?: string | null
+          expiry_date?: string | null
+          id?: string
+          upload_date?: string
+          verification_status?: string | null
+        }
+        Update: {
+          contractor_id?: string | null
+          doc_type?: string | null
+          expiry_date?: string | null
+          id?: string
+          upload_date?: string
+          verification_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compliance_documents_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contractors: {
+        Row: {
+          bbbee_level: number | null
+          cidb_grade: string | null
+          cipc_number: string | null
+          company_name: string
+          created_at: string
+          csd_number: string | null
+          id: string
+          profile_type: string | null
+          sectors: string | null
+          tender_readiness_score: number | null
+          vat_number: string | null
+        }
+        Insert: {
+          bbbee_level?: number | null
+          cidb_grade?: string | null
+          cipc_number?: string | null
+          company_name: string
+          created_at?: string
+          csd_number?: string | null
+          id?: string
+          profile_type?: string | null
+          sectors?: string | null
+          tender_readiness_score?: number | null
+          vat_number?: string | null
+        }
+        Update: {
+          bbbee_level?: number | null
+          cidb_grade?: string | null
+          cipc_number?: string | null
+          company_name?: string
+          created_at?: string
+          csd_number?: string | null
+          id?: string
+          profile_type?: string | null
+          sectors?: string | null
+          tender_readiness_score?: number | null
+          vat_number?: string | null
+        }
+        Relationships: []
+      }
+      payment_certificates: {
+        Row: {
+          certificate_number: string | null
+          certified_amount: number | null
+          cfo_signed: boolean
+          cfo_signed_date: string | null
+          contractor_id: string | null
+          due_date: string | null
+          id: string
+          invoice_submitted_date: string | null
+          mm_signed: boolean
+          mm_signed_date: string | null
+          pa_signed: boolean
+          pa_signed_date: string | null
+          payment_released: boolean
+          payment_released_date: string | null
+          pm_signed: boolean
+          pm_signed_date: string | null
+          pmu_signed: boolean
+          pmu_signed_date: string | null
+          qs_signed: boolean
+          qs_signed_date: string | null
+          status: string | null
+          tender_id: string | null
+        }
+        Insert: {
+          certificate_number?: string | null
+          certified_amount?: number | null
+          cfo_signed?: boolean
+          cfo_signed_date?: string | null
+          contractor_id?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_submitted_date?: string | null
+          mm_signed?: boolean
+          mm_signed_date?: string | null
+          pa_signed?: boolean
+          pa_signed_date?: string | null
+          payment_released?: boolean
+          payment_released_date?: string | null
+          pm_signed?: boolean
+          pm_signed_date?: string | null
+          pmu_signed?: boolean
+          pmu_signed_date?: string | null
+          qs_signed?: boolean
+          qs_signed_date?: string | null
+          status?: string | null
+          tender_id?: string | null
+        }
+        Update: {
+          certificate_number?: string | null
+          certified_amount?: number | null
+          cfo_signed?: boolean
+          cfo_signed_date?: string | null
+          contractor_id?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_submitted_date?: string | null
+          mm_signed?: boolean
+          mm_signed_date?: string | null
+          pa_signed?: boolean
+          pa_signed_date?: string | null
+          payment_released?: boolean
+          payment_released_date?: string | null
+          pm_signed?: boolean
+          pm_signed_date?: string | null
+          pmu_signed?: boolean
+          pmu_signed_date?: string | null
+          qs_signed?: boolean
+          qs_signed_date?: string | null
+          status?: string | null
+          tender_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_certificates_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_certificates_tender_id_fkey"
+            columns: ["tender_id"]
+            isOneToOne: false
+            referencedRelation: "tenders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tenders: {
+        Row: {
+          briefing_date: string | null
+          briefing_type: string | null
+          budget: number | null
+          category: string | null
+          cidb_grade_required: string | null
+          closing_date: string | null
+          created_at: string
+          description: string | null
+          id: string
+          province: string | null
+          status: string | null
+          tender_ref: string | null
+          title: string
+        }
+        Insert: {
+          briefing_date?: string | null
+          briefing_type?: string | null
+          budget?: number | null
+          category?: string | null
+          cidb_grade_required?: string | null
+          closing_date?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          province?: string | null
+          status?: string | null
+          tender_ref?: string | null
+          title: string
+        }
+        Update: {
+          briefing_date?: string | null
+          briefing_type?: string | null
+          budget?: number | null
+          category?: string | null
+          cidb_grade_required?: string | null
+          closing_date?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          province?: string | null
+          status?: string | null
+          tender_ref?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
