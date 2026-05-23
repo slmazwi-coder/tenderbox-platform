@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { AppSidebar } from "@/components/AppSidebar";
+import { AppHeader } from "@/components/AppHeader";
 
 function NotFoundComponent() {
   return (
@@ -72,19 +74,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Tenderbox — Government Procurement Platform" },
+      {
+        name: "description",
+        content:
+          "Tenderbox automates government tendering for South African municipalities and public sector entities.",
+      },
+      { name: "author", content: "Tenderbox" },
+      { property: "og:title", content: "Tenderbox — Government Procurement Platform" },
+      {
+        property: "og:description",
+        content:
+          "Tendering automation for South African municipalities and public sector entities.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
       },
     ],
   }),
@@ -113,7 +132,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <div className="min-h-screen bg-background">
+        <AppSidebar />
+        <div className="pl-60">
+          <AppHeader />
+          <main className="p-6">
+            <Outlet />
+          </main>
+        </div>
+      </div>
     </QueryClientProvider>
   );
 }
