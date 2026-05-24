@@ -28,127 +28,125 @@ export const Route = createFileRoute("/evaluation")({
   }),
 });
 
-// Mock evaluation data
+// Step 7: Gate 2 evaluation for Tender TBX-2025-0039
 const EVALUATION_DATA = {
   tenderRef: "TBX-2025-0039",
-  tenderTitle: "Installation of Water Reticulation Network — KwaMashu",
-  entity: "eThekwini Water Services",
+  tenderTitle: "Installation of Water Reticulation Network — Phase 3",
+  entity: "OR Tambo District Municipality",
   status: "evaluation_complete" as const,
   evaluationStarted: "2026-05-15",
-  daysSinceStart: 9,
+  daysSinceStart: 5,
   stats: {
     totalBids: 7,
     disqualified: 2,
-    belowThreshold: 1,
-    proceeding: 4,
+    belowThreshold: 0,
+    proceeding: 5,
   },
 };
 
+// Step 7: Evaluation scores for Tender 3
 const BIDDERS = [
   {
     id: "1",
     rank: 1,
     company: "Sizwe Construction (Pty) Ltd",
     compliance: 100,
-    functionality: 88,
-    price: 82,
+    functionality: 92,
+    price: 78,
     bbbee: 95,
-    total: 88.4,
+    total: 87.4,
     redFlags: 0,
-    status: "recommended",
+    status: "recommended" as const,
     flags: [],
   },
   {
     id: "2",
     rank: 2,
-    company: "Mega Civils JV",
-    compliance: 92,
+    company: "Mokoena Infrastructure",
+    compliance: 95,
     functionality: 85,
-    price: 78,
+    price: 75,
     bbbee: 90,
-    total: 84.1,
+    total: 82.1,
     redFlags: 0,
-    status: "proceeding",
+    status: "proceeding" as const,
     flags: [],
   },
   {
     id: "3",
     rank: 3,
-    company: "Urban Infrastructure Partners",
-    compliance: 88,
+    company: "Dlamini Civils",
+    compliance: 90,
     functionality: 82,
-    price: 75,
-    bbbee: 95,
-    total: 82.3,
-    redFlags: 1,
-    status: "proceeding",
-    flags: [{ type: "Bid price outside PCE bracket", severity: "Medium", detail: "Bid price is 12% above upper PCE estimate" }],
+    price: 72,
+    bbbee: 88,
+    total: 79.8,
+    redFlags: 0,
+    status: "proceeding" as const,
+    flags: [],
   },
   {
     id: "4",
     rank: 4,
-    company: "Coastal Construction Co",
-    compliance: 95,
-    functionality: 80,
-    price: 80,
+    company: "Ndaba Projects",
+    compliance: 88,
+    functionality: 78,
+    price: 70,
     bbbee: 85,
-    total: 81.7,
-    redFlags: 2,
-    status: "proceeding",
-    flags: [
-      { type: "Shell company indicators", severity: "High", detail: "Company registered within 12 months, limited directors" },
-      { type: "Abnormally low tender", severity: "Medium", detail: "Price is 18% below PCE lower estimate" },
-    ],
+    total: 76.2,
+    redFlags: 0,
+    status: "proceeding" as const,
+    flags: [],
   },
   {
     id: "5",
     rank: 5,
-    company: "Highway Builders SA",
+    company: "Khoza Engineering",
     compliance: 85,
-    functionality: 72,
-    price: 78,
-    bbbee: 90,
-    total: 78.2,
+    functionality: 75,
+    price: 68,
+    bbbee: 80,
+    total: 71.5,
     redFlags: 0,
-    status: "below_threshold",
+    status: "proceeding" as const,
     flags: [],
   },
   {
     id: "6",
     rank: 6,
-    company: "Ndlovu Civil Works",
+    company: "Ntuli Civil Works",
     compliance: 72,
-    functionality: 68,
-    price: 74,
-    bbbee: 85,
-    total: 73.4,
+    functionality: 65,
+    price: 82,
+    bbbee: 75,
+    total: null,
     redFlags: 1,
-    status: "disqualified",
-    flags: [{ type: "Bid rigging pattern detected", severity: "High", detail: "Similar pricing structure to disqualified bid" }],
+    status: "disqualified" as const,
+    flags: [{ type: "Abnormally low tender", severity: "High", detail: "Bid price is 19% below PCE lower estimate" }],
   },
   {
     id: "7",
     rank: 7,
-    company: "Quick Build Solutions",
+    company: "Ubuntu Infrastructure",
     compliance: 68,
-    functionality: 62,
-    price: 70,
-    bbbee: 80,
-    total: 68.5,
-    redFlags: 0,
-    status: "disqualified",
-    flags: [],
+    functionality: 58,
+    price: 65,
+    bbbee: 70,
+    total: null,
+    redFlags: 1,
+    status: "disqualified" as const,
+    flags: [{ type: "CIDB grade insufficient", severity: "High", detail: "Required Grade 6CE, contractor is Grade 4CE" }],
   },
 ];
 
 const INTEGRITY_CHECKS = [
   { check: "Administrative compliance check", status: "pass" as const },
   { check: "Tax compliance (SARS TCS)", status: "pass" as const },
-  { check: "CIDB grade verification", status: "pass" as const },
+  { check: "CIDB grade verification", status: "alert" as const },
   { check: "CSD registration status", status: "pass" as const },
   { check: "Briefing attendance confirmed", status: "pass" as const },
-  { check: "Bid rigging pattern analysis", status: "alert" as const },
-  { check: "Shell company detection", status: "alert" as const },
+  { check: "Bid rigging pattern analysis", status: "pass" as const },
+  { check: "Shell company detection", status: "pass" as const },
   { check: "Evaluator conflict of interest check", status: "pass" as const },
   { check: "PCE bracket compliance", status: "alert" as const },
   { check: "Abnormally low tender check", status: "alert" as const },
@@ -157,12 +155,12 @@ const INTEGRITY_CHECKS = [
 ];
 
 const BAC_MEMBERS = [
-  { role: "BEC Chairperson", name: "Adv. P. Nkosi", status: "signed" as const, signedDate: "2026-05-20T14:30:00" },
-  { role: "BAC Member — Senior Manager", name: "Mr. S. Mthembu", status: "signed" as const, signedDate: "2026-05-21T09:15:00" },
-  { role: "BAC Member — CFO", name: "Ms. R. Pillay", status: "signed" as const, signedDate: "2026-05-22T11:00:00" },
-  { role: "BAC Member — SCM Manager", name: "Mr. T. Dlamini", status: "pending" as const, notifiedDate: "2026-05-22" },
-  { role: "BAC Member — Technical Expert", name: "Eng. M. Singh", status: "pending" as const, notifiedDate: "2026-05-22" },
-  { role: "Municipal Manager", name: "Mr. K. Ndlovu", status: "pending" as const, notifiedDate: "2026-05-22" },
+  { role: "BEC Chairperson", name: "Adv. P. Nkosi", status: "signed" as const, signedDate: "2026-05-18T14:30:00" },
+  { role: "BAC Member — Senior Manager", name: "Mr. S. Mthembu", status: "signed" as const, signedDate: "2026-05-19T09:15:00" },
+  { role: "BAC Member — CFO", name: "Ms. R. Pillay", status: "pending" as const, notifiedDate: "2026-05-20" },
+  { role: "BAC Member — SCM Manager", name: "Mr. T. Dlamini", status: "pending" as const, notifiedDate: "2026-05-20" },
+  { role: "BAC Member — Technical Expert", name: "Eng. M. Singh", status: "pending" as const, notifiedDate: "2026-05-20" },
+  { role: "Municipal Manager", name: "Mr. K. Ndlovu", status: "pending" as const, notifiedDate: "2026-05-20" },
 ];
 
 function EvaluationPage() {
@@ -408,13 +406,6 @@ function BidderRow({
             Proceeding
           </span>
         );
-      case "below_threshold":
-        return (
-          <span className="inline-flex items-center gap-1 rounded-md border border-warning/20 bg-warning/10 px-2 py-1 text-xs font-medium text-warning">
-            <Clock className="h-3 w-3" />
-            Below Threshold
-          </span>
-        );
       case "disqualified":
         return (
           <span className="inline-flex items-center gap-1 rounded-md border border-danger/20 bg-danger/10 px-2 py-1 text-xs font-medium text-danger line-through">
@@ -425,7 +416,8 @@ function BidderRow({
     }
   };
 
-  const getScoreClass = (score: number, threshold = 70) => {
+  const getScoreClass = (score: number | null, threshold = 70) => {
+    if (score === null) return "text-muted-foreground";
     if (score >= 80) return "text-success font-medium";
     if (score >= threshold) return "text-foreground font-medium";
     return "text-danger";
@@ -439,19 +431,15 @@ function BidderRow({
       <td className={`px-4 py-3 text-center ${getScoreClass(bidder.functionality, 60)}`}>{bidder.functionality}%</td>
       <td className={`px-4 py-3 text-center ${getScoreClass(bidder.price, 70)}`}>{bidder.price}%</td>
       <td className={`px-4 py-3 text-center ${getScoreClass(bidder.bbbee, 70)}`}>{bidder.bbbee}%</td>
-      <td className={`px-4 py-3 text-center font-bold text-foreground`}>{bidder.total.toFixed(1)}%</td>
+      <td className={`px-4 py-3 text-center font-bold ${bidder.total ? "text-foreground" : "text-muted-foreground"}`}>
+        {bidder.total ? `${bidder.total.toFixed(1)}%` : "—"}
+      </td>
       <td className="px-4 py-3 text-center">
         {bidder.redFlags > 0 ? (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              // Show flags modal
-            }}
-            className="inline-flex items-center gap-1 rounded-md bg-danger/10 px-2 py-1 text-xs font-medium text-danger hover:bg-danger/20"
-          >
+          <span className="inline-flex items-center gap-1 rounded-md bg-danger/10 px-2 py-1 text-xs font-medium text-danger">
             <AlertTriangle className="h-3 w-3" />
             {bidder.redFlags}
-          </button>
+          </span>
         ) : (
           <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-success/10">
             <CheckCircle className="h-4 w-4 text-success" />
@@ -464,46 +452,9 @@ function BidderRow({
 }
 
 function BACMemberRow({ member }: { member: (typeof BAC_MEMBERS)[0] }) {
-  const getStatusDisplay = () => {
-    if (member.status === "signed") {
-      return {
-        badge: (
-          <span className="inline-flex items-center gap-1 rounded-md border border-success/20 bg-success/10 px-2 py-1 text-xs font-medium text-success">
-            <CheckCircle className="h-3 w-3" />
-            Signed — {formatDateTime(member.signedDate)}
-          </span>
-        ),
-        rowClass: "",
-      };
-    }
-    if (member.status === "pending") {
-      return {
-        badge: (
-          <span className="inline-flex items-center gap-1 rounded-md border border-warning/20 bg-warning/10 px-2 py-1 text-xs font-medium text-warning">
-            <Clock className="h-3 w-3" />
-            Pending — Notified {member.notifiedDate}
-          </span>
-        ),
-        rowClass: "",
-      };
-    }
-    return {
-      badge: (
-        <span className="inline-flex items-center gap-1 rounded-md border border-danger/20 bg-danger/10 px-2 py-1 text-xs font-medium text-danger">
-          <AlertTriangle className="h-3 w-3" />
-          Overdue
-        </span>
-      ),
-      rowClass: "bg-danger/5",
-    };
-  };
-
-  const { badge, rowClass } = getStatusDisplay();
-
-  // Special display for BEC Chairperson
   if (member.role === "BEC Chairperson") {
     return (
-      <tr className={rowClass}>
+      <tr className="">
         <td className="px-6 py-4 font-medium text-foreground">{member.role}</td>
         <td className="px-6 py-4 text-muted-foreground">{member.name}</td>
         <td className="px-6 py-4">
@@ -518,10 +469,22 @@ function BACMemberRow({ member }: { member: (typeof BAC_MEMBERS)[0] }) {
   }
 
   return (
-    <tr className={rowClass}>
+    <tr className="">
       <td className="px-6 py-4 font-medium text-foreground">{member.role}</td>
       <td className="px-6 py-4 text-muted-foreground">{member.name}</td>
-      <td className="px-6 py-4">{badge}</td>
+      <td className="px-6 py-4">
+        {member.status === "signed" ? (
+          <span className="inline-flex items-center gap-1 rounded-md border border-success/20 bg-success/10 px-2 py-1 text-xs font-medium text-success">
+            <CheckCircle className="h-3 w-3" />
+            Signed — {formatDateTime(member.signedDate!)}
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1 rounded-md border border-warning/20 bg-warning/10 px-2 py-1 text-xs font-medium text-warning">
+            <Clock className="h-3 w-3" />
+            Pending — Notified {member.notifiedDate}
+          </span>
+        )}
+      </td>
       <td className="px-6 py-4 text-muted-foreground">
         {member.status === "signed" && member.signedDate ? formatDateTime(member.signedDate) : "—"}
       </td>

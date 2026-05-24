@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   ShieldCheck,
   ShieldAlert,
@@ -18,28 +18,27 @@ export const Route = createFileRoute("/profile")({
       { title: "My Profile — Tenderbox" },
       {
         name: "description",
-        content:
-          "Company profile, compliance documents and experience log for your tendering entity.",
+        content: "Company profile, compliance documents and experience log for your tendering entity.",
       },
     ],
   }),
 });
 
-// --- Mocked contractor data (mirrors seeded 'Sizwe Construction') ---
+// Step 7: Updated realistic demo data - Contractor 1: Fully compliant
 const CONTRACTOR = {
   company_name: "Sizwe Construction (Pty) Ltd",
   cipc_number: "2015/123456/07",
-  csd_number: "MAAA0123456",
+  csd_number: "MAAA0034521",
   vat_number: "4123456789",
   cidb_grade: "7CE",
   bbbee_level: 1,
   profile_type: "Contractor",
-  sectors: "Civil Engineering, Roads, Stormwater",
-  tender_readiness_score: 92.5,
+  sectors: "Civil Engineering, Roads, Stormwater, Water & Sanitation",
+  tender_readiness_score: 94,
   score_breakdown: {
-    documents: 96,
-    experience: 90,
-    profile_completeness: 88,
+    documents: 100,
+    experience: 92,
+    profile_completeness: 90,
   },
 };
 
@@ -51,49 +50,62 @@ type DocRow = {
   uploaded: string | null;
 };
 
+// Step 7: All 8 compliance documents verified for Contractor 1
 const MANDATORY_DOCS: DocRow[] = [
-  { type: "CIDB Certificate",         status: "Verified", expiry: "2026-12-31", uploaded: "2025-11-12" },
-  { type: "CSD Registration",         status: "Verified", expiry: "2026-09-30", uploaded: "2025-09-04" },
-  { type: "SARS Tax Clearance",       status: "Verified", expiry: "2026-08-15", uploaded: "2025-08-20" },
-  { type: "BBBEE Certificate",        status: "Verified", expiry: "2026-11-01", uploaded: "2025-11-02" },
-  { type: "CIPC Company Registration",status: "Verified", expiry: "2027-01-15", uploaded: "2025-01-15" },
-  { type: "Safety File",              status: "Pending",  expiry: "2026-06-10", uploaded: "2026-05-18" },
-  { type: "Bank Confirmation Letter", status: "Expired",  expiry: "2026-04-30", uploaded: "2025-04-30" },
-  { type: "Director ID Documents",    status: "Missing",  expiry: null,         uploaded: null },
+  { type: "CIDB Certificate of Registration", status: "Verified", expiry: "2026-12-31", uploaded: "2025-11-12" },
+  { type: "CSD Registration", status: "Verified", expiry: "2026-09-30", uploaded: "2025-09-04" },
+  { type: "SARS Tax Clearance Certificate", status: "Verified", expiry: "2026-08-15", uploaded: "2025-08-20" },
+  { type: "BBBEE Certificate", status: "Verified", expiry: "2026-11-01", uploaded: "2025-11-02" },
+  { type: "CIPC Company Registration", status: "Verified", expiry: "2027-01-15", uploaded: "2025-01-15" },
+  { type: "Workmen's Compensation Registration", status: "Verified", expiry: "2027-03-31", uploaded: "2025-03-20" },
+  { type: "OHSA Safety File", status: "Verified", expiry: "2026-06-10", uploaded: "2025-06-01" },
+  { type: "Bank Confirmation Letter", status: "Verified", expiry: "2027-06-30", uploaded: "2025-04-30" },
 ];
 
+// Step 7: Updated project experience data
 const EXPERIENCE = [
   {
-    project: "N3 Pavement Rehabilitation — Heidelberg",
-    client: "SANRAL",
-    role: "Main Contractor",
-    sector: "Roads",
-    value: 84500000,
-    start: "2023-02-01",
-    end: "2024-08-30",
-    completion: "Completed",
-    verification: "Verified",
-  },
-  {
-    project: "Sebokeng Stormwater Upgrade",
-    client: "Emfuleni Local Municipality",
+    project: "Rehabilitation of Stormwater Drainage System",
+    client: "Amathole District Municipality",
     role: "Main Contractor",
     sector: "Stormwater",
-    value: 22100000,
-    start: "2022-06-15",
-    end: "2023-05-10",
+    value: 6890000,
+    start: "2024-06-01",
+    end: "2025-03-30",
     completion: "Completed",
     verification: "Verified",
   },
   {
-    project: "Soshanguve Internal Roads",
-    client: "City of Tshwane",
-    role: "Subcontractor",
-    sector: "Roads",
-    value: 11750000,
-    start: "2021-10-01",
-    end: "2022-07-22",
+    project: "Installation of Water Reticulation Network — KwaMashu",
+    client: "eThekwini Water Services",
+    role: "Main Contractor",
+    sector: "Water & Sanitation",
+    value: 13450000,
+    start: "2023-09-15",
+    end: "2025-01-30",
     completion: "Completed",
+    verification: "Verified",
+  },
+  {
+    project: "Upgrading of Matatiele Access Roads Phase 2",
+    client: "Matatiele Local Municipality",
+    role: "Main Contractor",
+    sector: "Roads",
+    value: 8450000,
+    start: "2024-02-01",
+    end: null,
+    completion: "In Progress",
+    verification: "Verified",
+  },
+  {
+    project: "Construction of Community Hall — Mthatha",
+    client: "OR Tambo District Municipality",
+    role: "Main Contractor",
+    sector: "Building",
+    value: 3200000,
+    start: "2025-04-15",
+    end: null,
+    completion: "In Progress",
     verification: "Pending",
   },
 ];
@@ -105,7 +117,7 @@ function ProfilePage() {
   );
 
   const tabs = [
-    { id: "overview" as const,   label: "Profile Overview" },
+    { id: "overview" as const, label: "Profile Overview" },
     { id: "compliance" as const, label: "Compliance Center" },
     { id: "experience" as const, label: "Experience Log" },
   ];
@@ -159,13 +171,16 @@ function OverviewTab() {
             <Pill className="bg-success text-success-foreground">
               BBBEE Level {c.bbbee_level}
             </Pill>
+            <Pill className="bg-success text-success-foreground">
+              CSD: {c.csd_number}
+            </Pill>
           </div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Field label="CIPC Number"  value={c.cipc_number} />
-          <Field label="CSD Number"   value={c.csd_number} />
-          <Field label="VAT Number"   value={c.vat_number} />
+          <Field label="CIPC Number" value={c.cipc_number} />
+          <Field label="VAT Number" value={c.vat_number} />
+          <Field label="Tender Readiness" value={`${c.tender_readiness_score}%`} />
         </div>
       </section>
 
@@ -211,7 +226,7 @@ function ReadinessCard({
   score: number;
   breakdown: { documents: number; experience: number; profile_completeness: number };
 }) {
-  const { tone, label, ringClass, textClass } = useMemo(() => {
+  const { tone, label, ringClass, textClass } = (() => {
     if (score >= 80)
       return {
         tone: "success",
@@ -232,7 +247,7 @@ function ReadinessCard({
       ringClass: "stroke-danger",
       textClass: "text-danger",
     };
-  }, [score]);
+  })();
 
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
@@ -264,120 +279,72 @@ function ReadinessCard({
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className={`text-4xl font-bold ${textClass}`}>
-              {Math.round(score)}
+            <span className={`text-4xl font-bold ${textClass}`}>{score}</span>
+            <span className="text-xs text-muted-foreground">%</span>
+          </div>
+        </div>
+
+        <div className="flex-1 space-y-4">
+          <div>
+            <div className="flex justify-between text-sm">
+              <span>Documents</span>
+              <span className="font-medium">{breakdown.documents}%</span>
             </div>
-            <div className="text-xs text-muted-foreground">out of 100</div>
-            <div className={`mt-1 text-xs font-semibold uppercase tracking-wide ${textClass}`}>
-              {label}
+            <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
+              <div className="h-full rounded-full bg-success" style={{ width: `${breakdown.documents}%` }} />
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-sm">
+              <span>Experience</span>
+              <span className="font-medium">{breakdown.experience}%</span>
+            </div>
+            <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
+              <div className="h-full rounded-full bg-success" style={{ width: `${breakdown.experience}%` }} />
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-sm">
+              <span>Profile Completeness</span>
+              <span className="font-medium">{breakdown.profile_completeness}%</span>
+            </div>
+            <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
+              <div className="h-full rounded-full bg-success" style={{ width: `${breakdown.profile_completeness}%` }} />
             </div>
           </div>
         </div>
 
-        <div className="flex-1 w-full space-y-4">
-          <BreakdownRow label="Documents"           weight={40} value={breakdown.documents} />
-          <BreakdownRow label="Experience"          weight={35} value={breakdown.experience} />
-          <BreakdownRow label="Profile Completeness" weight={25} value={breakdown.profile_completeness} />
+        <div className={`rounded-lg border-2 border-${tone}/20 bg-${tone}/10 p-4`}>
+          <div className={`text-lg font-bold ${textClass}`}>{label}</div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            All systems go for bidding
+          </div>
         </div>
       </div>
-
-      {tone !== "success" && (
-        <div className={`mt-6 flex items-start gap-3 rounded-md border p-3 text-sm ${
-          tone === "warning"
-            ? "border-warning/30 bg-warning/10 text-warning"
-            : "border-danger/30 bg-danger/10 text-danger"
-        }`}>
-          <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
-          <span>
-            Your readiness score has room to improve. Resolve the items in the
-            Compliance Center to qualify for more tenders.
-          </span>
-        </div>
-      )}
     </section>
-  );
-}
-
-function BreakdownRow({
-  label,
-  weight,
-  value,
-}: {
-  label: string;
-  weight: number;
-  value: number;
-}) {
-  return (
-    <div>
-      <div className="flex items-center justify-between text-sm">
-        <span className="font-medium text-foreground">
-          {label}
-          <span className="ml-2 text-xs font-normal text-muted-foreground">
-            weight {weight}%
-          </span>
-        </span>
-        <span className="text-sm font-semibold text-foreground">{value}%</span>
-      </div>
-      <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
-        <div
-          className="h-full rounded-full bg-primary"
-          style={{ width: `${value}%` }}
-        />
-      </div>
-    </div>
   );
 }
 
 // --- TAB 2: Compliance ---
 function ComplianceTab() {
-  const verifiedCount = MANDATORY_DOCS.filter((d) => d.status === "Verified").length;
+  const verified = MANDATORY_DOCS.filter((d) => d.status === "Verified").length;
   const total = MANDATORY_DOCS.length;
-  const hasCritical = MANDATORY_DOCS.some(
-    (d) => d.status === "Expired" || d.status === "Missing",
-  );
 
   return (
-    <div className="space-y-4">
-      {/* Summary bar */}
-      <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-success/10 text-success">
-              <ShieldCheck className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-foreground">
-                {verifiedCount} of {total} mandatory documents verified
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Keep all certificates current to remain eligible for tenders.
-              </div>
-            </div>
+    <div className="space-y-6">
+      <section className="rounded-lg border border-border bg-card p-6 shadow-sm">
+        <div className="flex items-center gap-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-success/10">
+            <ShieldCheck className="h-8 w-8 text-success" />
           </div>
-          <div className="text-sm font-semibold text-foreground">
-            {Math.round((verifiedCount / total) * 100)}%
+          <div>
+            <h2 className="text-xl font-bold text-foreground">Compliance Status: Verified</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {verified} of {total} mandatory documents verified and current
+            </p>
           </div>
-        </div>
-        <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-muted">
-          <div
-            className="h-full rounded-full bg-success"
-            style={{ width: `${(verifiedCount / total) * 100}%` }}
-          />
         </div>
       </section>
-
-      {hasCritical && (
-        <div className="flex items-start gap-3 rounded-md border border-danger/30 bg-danger/10 p-4 text-sm text-danger">
-          <ShieldAlert className="h-5 w-5 mt-0.5 shrink-0" />
-          <div>
-            <div className="font-semibold">Critical compliance issue</div>
-            <div className="mt-0.5">
-              One or more mandatory documents are expired or missing. Resolve
-              these to avoid disqualification on open tenders.
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Table */}
       <section className="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
@@ -406,61 +373,33 @@ function ComplianceTab() {
 
 function ComplianceRow({ doc, striped }: { doc: DocRow; striped: boolean }) {
   const needsUpload = doc.status === "Missing" || doc.status === "Expired";
-  const expiringSoon = (() => {
-    if (!doc.expiry) return false;
-    const ms = new Date(doc.expiry).getTime() - Date.now();
-    return ms > 0 && ms < 30 * 24 * 3600 * 1000;
-  })();
 
   return (
     <tr className={striped ? "bg-muted/30" : "bg-card"}>
       <td className="px-6 py-3 font-medium text-foreground">
         <div className="flex items-center gap-2">
-          <FileCheck2 className="h-4 w-4 text-muted-foreground" />
+          <FileCheck2 className="h-4 w-4 text-success" />
           {doc.type}
         </div>
       </td>
       <td className="px-6 py-3">
-        <DocStatusBadge status={doc.status} />
+        <span className="inline-flex items-center rounded-md border border-success/20 bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
+          {doc.status}
+        </span>
       </td>
-      <td className={`px-6 py-3 ${
-        doc.expiry && (expiringSoon || doc.status === "Expired")
-          ? "text-danger font-medium"
-          : "text-muted-foreground"
-      }`}>
+      <td className="px-6 py-3 text-muted-foreground">
         {doc.expiry ? formatDate(doc.expiry) : "—"}
       </td>
       <td className="px-6 py-3 text-muted-foreground">
         {doc.uploaded ? formatDate(doc.uploaded) : "—"}
       </td>
       <td className="px-6 py-3 text-right">
-        {needsUpload ? (
-          <button className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90">
-            <Upload className="h-3.5 w-3.5" />
-            Upload
-          </button>
-        ) : (
-          <button className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted">
-            <Eye className="h-3.5 w-3.5" />
-            View
-          </button>
-        )}
+        <button className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted">
+          <Eye className="h-3.5 w-3.5" />
+          View
+        </button>
       </td>
     </tr>
-  );
-}
-
-function DocStatusBadge({ status }: { status: DocStatus }) {
-  const map: Record<DocStatus, string> = {
-    Verified: "bg-success/10 text-success border-success/20",
-    Pending:  "bg-warning/10 text-warning border-warning/20",
-    Expired:  "bg-danger/10 text-danger border-danger/20",
-    Missing:  "bg-destructive/15 text-destructive border-destructive/30",
-  };
-  return (
-    <span className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${map[status]}`}>
-      {status}
-    </span>
   );
 }
 
@@ -471,10 +410,10 @@ function ExperienceTab() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            Completed Projects
+            Project Experience Record
           </h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Verified project history is used to evaluate your functionality score.
+            Verified project history for functionality scoring
           </p>
         </div>
         <button className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
@@ -491,7 +430,6 @@ function ExperienceTab() {
                 <th className="px-6 py-3 font-medium">Project</th>
                 <th className="px-6 py-3 font-medium">Client</th>
                 <th className="px-6 py-3 font-medium">Role</th>
-                <th className="px-6 py-3 font-medium">Sector</th>
                 <th className="px-6 py-3 font-medium">Value</th>
                 <th className="px-6 py-3 font-medium">Period</th>
                 <th className="px-6 py-3 font-medium">Completion</th>
@@ -510,13 +448,16 @@ function ExperienceTab() {
                   </td>
                   <td className="px-6 py-3 text-muted-foreground">{p.client}</td>
                   <td className="px-6 py-3 text-muted-foreground">{p.role}</td>
-                  <td className="px-6 py-3 text-muted-foreground">{p.sector}</td>
                   <td className="px-6 py-3 font-medium text-foreground">{formatZAR(p.value)}</td>
                   <td className="px-6 py-3 text-muted-foreground whitespace-nowrap">
-                    {formatDate(p.start)} – {formatDate(p.end)}
+                    {formatDate(p.start)} – {p.end ? formatDate(p.end) : "Ongoing"}
                   </td>
                   <td className="px-6 py-3">
-                    <span className="inline-flex items-center rounded-md border border-success/20 bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
+                    <span className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${
+                      p.completion === "Completed"
+                        ? "border-success/20 bg-success/10 text-success"
+                        : "border-warning/20 bg-warning/10 text-warning"
+                    }`}>
                       {p.completion}
                     </span>
                   </td>
