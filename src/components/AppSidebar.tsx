@@ -8,6 +8,7 @@ import {
   CreditCard,
   Briefcase,
   BarChart3,
+  Scale,
 } from "lucide-react";
 
 const items = [
@@ -15,6 +16,7 @@ const items = [
   { title: "My Profile", url: "/profile", icon: User },
   { title: "Compliance Documents", url: "/compliance", icon: ShieldCheck },
   { title: "Active Tenders", url: "/tenders", icon: FileText },
+  { title: "Gate 2 — Evaluation", url: "/evaluation", icon: Scale },
   { title: "My Bids", url: "/bids", icon: Send },
   { title: "Payments", url: "/payments", icon: CreditCard },
   { title: "Projects", url: "/projects", icon: Briefcase },

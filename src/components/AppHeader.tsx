@@ -5,6 +5,7 @@ const TITLES: Record<string, string> = {
   "/profile": "My Profile",
   "/compliance": "Compliance Documents",
   "/tenders": "Active Tenders",
+  "/evaluation": "Gate 2 — Evaluation",
   "/bids": "My Bids",
   "/payments": "Payments",
   "/projects": "Projects",
