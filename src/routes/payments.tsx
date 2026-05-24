@@ -31,77 +31,51 @@ export const Route = createFileRoute("/payments")({
 
 // Payment chain steps
 const PAYMENT_STEPS = [
-  { id: "qs", label: "QS Measurement", duration: "7 days" },
-  { id: "pa", label: "PA Certification", duration: "5 days" },
-  { id: "invoice", label: "Invoice Submitted", duration: "30 days starts", isClockStart: true },
-  { id: "pm", label: "PM Sign-off", duration: "4 days" },
-  { id: "pmu", label: "PMU Sign-off", duration: "3 days" },
-  { id: "cfo", label: "CFO Sign-off", duration: "3 days" },
-  { id: "mm", label: "MM Sign-off", duration: "3 days" },
-  { id: "released", label: "PAYMENT RELEASED", duration: "", isEnd: true },
+  { id: "qs", label: "QS Measurement" },
+  { id: "pa", label: "PA Certification" },
+  { id: "invoice", label: "Invoice Submitted" },
+  { id: "pm", label: "PM Sign-off" },
+  { id: "pmu", label: "PMU Sign-off" },
+  { id: "cfo", label: "CFO Sign-off" },
+  { id: "mm", label: "MM Sign-off" },
+  { id: "released", label: "PAYMENT RELEASED" },
 ];
 
-// Mock payment certificates
+// Step 7: Active payment certificate for Tender TBX-2025-0031
 const ACTIVE_CERTIFICATES = [
   {
     id: "1",
-    certificateNumber: "PC-2026-0042",
+    certificateNumber: "PC-2025-047-003",
     tenderRef: "TBX-2025-0031",
     tenderTitle: "Rehabilitation of Stormwater Drainage System",
     contractorName: "Sizwe Construction (Pty) Ltd",
-    certifiedAmount: 2450000,
-    status: "pending_cfo",
-    invoiceDate: "2026-05-10",
-    daysRemaining: 20,
+    certifiedAmount: 1245000,
+    status: "pending_pmu",
+    invoiceDate: "2026-05-16",
+    daysRemaining: 22,
     clockStatus: "warning" as const,
     escrowStatus: "available" as const,
-    escrowBalance: 2450000,
-    currentStep: "cfo",
+    escrowBalance: 1245000,
+    currentStep: "pmu",
     approvals: {
-      qs: { completed: true, date: "2026-05-15T10:30:00" },
-      pa: { completed: true, date: "2026-05-16T14:15:00" },
-      invoice: { completed: true, date: "2026-05-10T09:00:00" },
-      pm: { completed: true, date: "2026-05-17T11:45:00" },
-      pmu: { completed: true, date: "2026-05-18T16:00:00" },
+      qs: { completed: true, date: "2026-05-20T10:30:00" },
+      pa: { completed: true, date: "2026-05-22T14:15:00" },
+      invoice: { completed: true, date: "2026-05-16T09:00:00" },
+      pm: { completed: true, date: "2026-05-24T11:45:00" },
+      pmu: { completed: false, date: null },
       cfo: { completed: false, date: null },
       mm: { completed: false, date: null },
       released: { completed: false, date: null },
     },
   },
-  {
-    id: "2",
-    certificateNumber: "PC-2026-0038",
-    tenderRef: "TBX-2025-0028",
-    tenderTitle: "Construction of Community Hall — Mthatha",
-    contractorName: "Sizwe Construction (Pty) Ltd",
-    certifiedAmount: 1820000,
-    status: "overdue",
-    invoiceDate: "2026-04-15",
-    daysRemaining: -3,
-    clockStatus: "danger" as const,
-    escrowStatus: "topup" as const,
-    escrowBalance: 1650000,
-    currentStep: "mm",
-    approvals: {
-      qs: { completed: true, date: "2026-04-18T10:30:00" },
-      pa: { completed: true, date: "2026-04-19T14:15:00" },
-      invoice: { completed: true, date: "2026-04-15T09:00:00" },
-      pm: { completed: true, date: "2026-04-20T11:45:00" },
-      pmu: { completed: true, date: "2026-04-21T16:00:00" },
-      cfo: { completed: true, date: "2026-05-02T09:30:00" },
-      mm: { completed: false, date: null },
-      released: { completed: false, date: null },
-    },
-  },
 ];
 
-// Payment history
+// Step 7: Payment history
 const PAYMENT_HISTORY = [
-  { id: "PC-2026-0025", period: "Mar 2026", amount: 3150000, releasedDate: "2026-04-12", daysTaken: 18, status: "paid" },
-  { id: "PC-2026-0018", period: "Feb 2026", amount: 2875000, releasedDate: "2026-03-28", daysTaken: 22, status: "paid" },
-  { id: "PC-2026-0012", period: "Jan 2026", amount: 1940000, releasedDate: "2026-02-28", daysTaken: 25, status: "paid" },
-  { id: "PC-2025-0089", period: "Dec 2025", amount: 4520000, releasedDate: "2026-01-30", daysTaken: 31, status: "overdue" },
-  { id: "PC-2025-0075", period: "Nov 2025", amount: 3280000, releasedDate: "2025-12-28", daysTaken: 19, status: "paid" },
+  { id: "PC-2025-047-002", period: "Apr 2026", amount: 2150000, releasedDate: "2026-05-08", daysTaken: 16, status: "paid" },
+  { id: "PC-2025-047-001", period: "Mar 2026", amount: 1875000, releasedDate: "2026-04-12", daysTaken: 22, status: "paid" },
+  { id: "PC-2025-046-003", period: "Feb 2026", amount: 3240000, releasedDate: "2026-03-28", daysTaken: 28, status: "paid" },
+  { id: "PC-2025-045-002", period: "Jan 2026", amount: 2980000, releasedDate: "2026-02-28", daysTaken: 31, status: "overdue" },
 ];
 
 function PaymentsPage() {
@@ -264,34 +238,21 @@ function PaymentCertificateCard({
   certificate,
   selected,
   onSelect,
-  contractorView,
 }: {
   certificate: (typeof ACTIVE_CERTIFICATES)[0];
   selected: boolean;
   onSelect: () => void;
-  contractorView: boolean;
 }) {
-  const statusColors = {
-    pending_cfo: "border-warning/30 bg-warning/5",
-    pending_pmu: "border-warning/30 bg-warning/5",
-    overdue: "border-danger/30 bg-danger/5",
-    paid: "border-success/30 bg-success/5",
-  };
-
   const clockColor = certificate.daysRemaining > 15 ? "text-success" : certificate.daysRemaining > 7 ? "text-warning" : "text-danger";
 
   return (
     <div
-      className={`rounded-lg border-2 bg-card shadow-sm overflow-hidden transition-all ${
-        statusColors[certificate.status as keyof typeof statusColors]
-      } ${selected ? "ring-2 ring-primary" : ""}`}
+      className={`rounded-lg border-2 bg-card shadow-sm overflow-hidden transition-all border-warning/30 ${
+        selected ? "ring-2 ring-primary" : ""
+      }`}
     >
       {/* Colored Header */}
-      <div className={`px-6 py-4 ${
-        certificate.status === "overdue" ? "bg-danger/10" :
-        certificate.status === "paid" ? "bg-success/10" :
-        "bg-warning/10"
-      }`}>
+      <div className="bg-warning/10 px-6 py-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <div className="font-mono text-sm font-bold text-foreground">{certificate.certificateNumber}</div>
@@ -300,14 +261,8 @@ function PaymentCertificateCard({
           </div>
           <div className="text-right">
             <div className="text-2xl font-bold text-foreground">{formatZAR(certificate.certifiedAmount)}</div>
-            <span className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${
-              certificate.status === "overdue" ? "bg-danger/20 text-danger border-danger/30" :
-              certificate.status === "paid" ? "bg-success/20 text-success border-success/30" :
-              "bg-warning/20 text-warning border-warning/30"
-            }`}>
-              {certificate.status === "pending_cfo" ? "Pending CFO" :
-               certificate.status === "pending_pmu" ? "Pending PMU" :
-               certificate.status === "overdue" ? "OVERDUE" : "Paid"}
+            <span className="inline-flex items-center rounded-md border border-warning/30 bg-warning/20 px-2 py-0.5 text-xs font-medium text-warning">
+              Pending PMU Sign-off
             </span>
           </div>
         </div>
@@ -370,10 +325,10 @@ function PaymentCertificateCard({
               30-Day Statutory Window
             </div>
             <div className="mt-1 text-2xl font-bold">
-              <span className={certificate.daysRemaining < 0 ? "text-danger" : clockColor}>
-                {Math.abs(certificate.daysRemaining)} days
-              </span>
-              {certificate.daysRemaining < 0 ? " overdue" : " remaining"}
+              <span className={clockColor}>
+                {certificate.daysRemaining} days
+              </span>{" "}
+              remaining
             </div>
           </div>
           <CircularClock daysRemaining={certificate.daysRemaining} />
@@ -383,16 +338,12 @@ function PaymentCertificateCard({
         <div className="rounded-md border border-border bg-muted/30 p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Lock className={`h-4 w-4 ${certificate.escrowStatus === "available" ? "text-success" : "text-warning"}`} />
+              <Lock className="h-4 w-4 text-success" />
               <span className="text-sm font-medium text-foreground">Escrow: Ring-fenced</span>
             </div>
             <div className="text-right">
               <div className="text-sm font-medium text-foreground">{formatZAR(certificate.escrowBalance)}</div>
-              <span className={`text-xs ${
-                certificate.escrowStatus === "available" ? "text-success" : "text-warning"
-              }`}>
-                {certificate.escrowStatus === "available" ? "Funds available" : "TOP-UP REQUIRED"}
-              </span>
+              <span className="text-xs text-success">Funds available</span>
             </div>
           </div>
         </div>
@@ -421,30 +372,12 @@ function CircularClock({ daysRemaining }: { daysRemaining: number }) {
   return (
     <div className="relative h-16 w-16">
       <svg className="h-16 w-16 -rotate-90" viewBox="0 0 72 72">
-        <circle
-          cx="36"
-          cy="36"
-          r="35"
-          className="stroke-muted"
-          strokeWidth="6"
-          fill="none"
-        />
-        <circle
-          cx="36"
-          cy="36"
-          r="35"
-          stroke={strokeColor}
-          strokeWidth="6"
-          fill="none"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          className="transition-all"
-        />
+        <circle cx="36" cy="36" r="35" className="stroke-muted" strokeWidth="6" fill="none" />
+        <circle cx="36" cy="36" r="35" stroke={strokeColor} strokeWidth="6" fill="none" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset} className="transition-all" />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
         <span className={`text-xs font-bold ${daysRemaining > 15 ? "text-success" : daysRemaining > 7 ? "text-warning" : "text-danger"}`}>
-          {daysRemaining > 0 ? daysRemaining : 0}
+          {daysRemaining}
         </span>
       </div>
     </div>
