@@ -6,155 +6,132 @@ import {
   CheckCircle,
   AlertCircle,
   Download,
-  Eye,
-  FileText,
+  Lock,
+  AlertTriangle,
+  Shield,
   Calendar,
-  ArrowUpDown,
+  ChevronRight,
+  ToggleLeft,
+  ToggleRight,
+  FileText,
 } from "lucide-react";
 
 export const Route = createFileRoute("/payments")({
   component: PaymentsPage,
   head: () => ({
     meta: [
-      { title: "Payments — Tenderbox" },
+      { title: "Payment Engine — Tenderbox" },
       {
         name: "description",
-        content: "Track payment certificates, approval workflow, and payment history.",
+        content: "Automated escrow-based payment processing — 30 day outer limit",
       },
     ],
   }),
 });
 
-// Mock payment certificate data
-const PAYMENTS = [
+// Payment chain steps
+const PAYMENT_STEPS = [
+  { id: "qs", label: "QS Measurement", duration: "7 days" },
+  { id: "pa", label: "PA Certification", duration: "5 days" },
+  { id: "invoice", label: "Invoice Submitted", duration: "30 days starts", isClockStart: true },
+  { id: "pm", label: "PM Sign-off", duration: "4 days" },
+  { id: "pmu", label: "PMU Sign-off", duration: "3 days" },
+  { id: "cfo", label: "CFO Sign-off", duration: "3 days" },
+  { id: "mm", label: "MM Sign-off", duration: "3 days" },
+  { id: "released", label: "PAYMENT RELEASED", duration: "", isEnd: true },
+];
+
+// Mock payment certificates
+const ACTIVE_CERTIFICATES = [
   {
     id: "1",
     certificateNumber: "PC-2026-0042",
-    tenderRef: "ETH-2026-082",
-    tenderTitle: "Supply and Delivery of Medical Equipment",
+    tenderRef: "TBX-2025-0031",
+    tenderTitle: "Rehabilitation of Stormwater Drainage System",
     contractorName: "Sizwe Construction (Pty) Ltd",
     certifiedAmount: 2450000,
-    invoiceDate: "2026-05-10",
-    dueDate: "2026-06-09",
     status: "pending_cfo",
+    invoiceDate: "2026-05-10",
+    daysRemaining: 20,
+    clockStatus: "warning" as const,
+    escrowStatus: "available" as const,
+    escrowBalance: 2450000,
+    currentStep: "cfo",
     approvals: {
-      qs: true, qsDate: "2026-05-15",
-      pa: true, paDate: "2026-05-16",
-      pm: true, pmDate: "2026-05-17",
-      pmu: true, pmuDate: "2026-05-18",
-      cfo: false, cfoDate: null,
-      mm: false, mmDate: null,
+      qs: { completed: true, date: "2026-05-15T10:30:00" },
+      pa: { completed: true, date: "2026-05-16T14:15:00" },
+      invoice: { completed: true, date: "2026-05-10T09:00:00" },
+      pm: { completed: true, date: "2026-05-17T11:45:00" },
+      pmu: { completed: true, date: "2026-05-18T16:00:00" },
+      cfo: { completed: false, date: null },
+      mm: { completed: false, date: null },
+      released: { completed: false, date: null },
     },
   },
   {
     id: "2",
     certificateNumber: "PC-2026-0038",
-    tenderRef: "ETH-2026-082",
-    tenderTitle: "Supply and Delivery of Medical Equipment",
+    tenderRef: "TBX-2025-0028",
+    tenderTitle: "Construction of Community Hall — Mthatha",
     contractorName: "Sizwe Construction (Pty) Ltd",
     certifiedAmount: 1820000,
-    invoiceDate: "2026-04-15",
-    dueDate: "2026-05-15",
     status: "overdue",
+    invoiceDate: "2026-04-15",
+    daysRemaining: -3,
+    clockStatus: "danger" as const,
+    escrowStatus: "topup" as const,
+    escrowBalance: 1650000,
+    currentStep: "mm",
     approvals: {
-      qs: true, qsDate: "2026-04-18",
-      pa: true, paDate: "2026-04-19",
-      pm: true, pmDate: "2026-04-20",
-      pmu: true, pmuDate: "2026-04-21",
-      cfo: false, cfoDate: null,
-      mm: false, mmDate: null,
-    },
-  },
-  {
-    id: "3",
-    certificateNumber: "PC-2026-0031",
-    tenderRef: "NMB-2026-045",
-    tenderTitle: "Installation of Solar PV Systems",
-    contractorName: "Sizwe Construction (Pty) Ltd",
-    certifiedAmount: 892000,
-    invoiceDate: "2026-05-01",
-    dueDate: "2026-05-31",
-    status: "pending_pmu",
-    approvals: {
-      qs: true, qsDate: "2026-05-03",
-      pa: true, paDate: "2026-05-04",
-      pm: true, pmDate: "2026-05-05",
-      pmu: false, pmuDate: null,
-      cfo: false, cfoDate: null,
-      mm: false, mmDate: null,
-    },
-  },
-  {
-    id: "4",
-    certificateNumber: "PC-2026-0028",
-    tenderRef: "ETH-2026-082",
-    tenderTitle: "Supply and Delivery of Medical Equipment",
-    contractorName: "Sizwe Construction (Pty) Ltd",
-    certifiedAmount: 3150000,
-    invoiceDate: "2026-03-20",
-    dueDate: "2026-04-19",
-    status: "paid",
-    approvals: {
-      qs: true, qsDate: "2026-03-22",
-      pa: true, paDate: "2026-03-23",
-      pm: true, pmDate: "2026-03-24",
-      pmu: true, pmuDate: "2026-03-25",
-      cfo: true, cfoDate: "2026-04-01",
-      mm: true, mmDate: "2026-04-05",
-    },
-  },
-  {
-    id: "5",
-    certificateNumber: "PC-2026-0025",
-    tenderRef: "NMB-2026-045",
-    tenderTitle: "Installation of Solar PV Systems",
-    contractorName: "Sizwe Construction (Pty) Ltd",
-    certifiedAmount: 567000,
-    invoiceDate: "2026-04-05",
-    dueDate: "2026-05-05",
-    status: "paid",
-    approvals: {
-      qs: true, qsDate: "2026-04-07",
-      pa: true, paDate: "2026-04-08",
-      pm: true, pmDate: "2026-04-09",
-      pmu: true, pmuDate: "2026-04-10",
-      cfo: true, cfoDate: "2026-04-20",
-      mm: true, mmDate: "2026-04-25",
+      qs: { completed: true, date: "2026-04-18T10:30:00" },
+      pa: { completed: true, date: "2026-04-19T14:15:00" },
+      invoice: { completed: true, date: "2026-04-15T09:00:00" },
+      pm: { completed: true, date: "2026-04-20T11:45:00" },
+      pmu: { completed: true, date: "2026-04-21T16:00:00" },
+      cfo: { completed: true, date: "2026-05-02T09:30:00" },
+      mm: { completed: false, date: null },
+      released: { completed: false, date: null },
     },
   },
 ];
 
-type StatusFilter = "all" | "pending" | "pending_pmu" | "pending_cfo" | "overdue" | "paid";
+// Payment history
+const PAYMENT_HISTORY = [
+  { id: "PC-2026-0025", period: "Mar 2026", amount: 3150000, releasedDate: "2026-04-12", daysTaken: 18, status: "paid" },
+  { id: "PC-2026-0018", period: "Feb 2026", amount: 2875000, releasedDate: "2026-03-28", daysTaken: 22, status: "paid" },
+  { id: "PC-2026-0012", period: "Jan 2026", amount: 1940000, releasedDate: "2026-02-28", daysTaken: 25, status: "paid" },
+  { id: "PC-2025-0089", period: "Dec 2025", amount: 4520000, releasedDate: "2026-01-30", daysTaken: 31, status: "overdue" },
+  { id: "PC-2025-0075", period: "Nov 2025", amount: 3280000, releasedDate: "2025-12-28", daysTaken: 19, status: "paid" },
+];
 
 function PaymentsPage() {
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
-  const [expandedCert, setExpandedCert] = useState<string | null>(null);
+  const [contractorView, setContractorView] = useState(false);
+  const [selectedCert, setSelectedCert] = useState<string | null>(null);
 
-  const filteredPayments = PAYMENTS.filter((p) => {
-    if (statusFilter === "all") return true;
-    if (statusFilter === "pending") return p.status.startsWith("pending");
-    return p.status === statusFilter;
-  });
-
-  const totalPending = PAYMENTS
-    .filter((p) => p.status.startsWith("pending") || p.status === "overdue")
-    .reduce((sum, p) => sum + p.certifiedAmount, 0);
-
-  const totalOverdue = PAYMENTS
-    .filter((p) => p.status === "overdue")
-    .reduce((sum, p) => sum + p.certifiedAmount, 0);
+  const selectedCertificate = ACTIVE_CERTIFICATES.find((c) => c.id === selectedCert);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Payments</h1>
+          <h1 className="text-2xl font-bold text-foreground">Payment Engine</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Payment certificates and approval workflow tracking
+            Automated escrow-based payment processing — 30 day outer limit
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setContractorView(!contractorView)}
+            className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+              contractorView
+                ? "bg-primary text-primary-foreground"
+                : "border border-border bg-card text-foreground hover:bg-muted"
+            }`}
+          >
+            {contractorView ? <ToggleRight className="h-4 w-4" /> : <ToggleLeft className="h-4 w-4" />}
+            {contractorView ? "Contractor View Active" : "Switch to Contractor View"}
+          </button>
           <button className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:bg-muted">
             <Download className="h-4 w-4" />
             Export Report
@@ -162,309 +139,314 @@ function PaymentsPage() {
         </div>
       </div>
 
-      {/* Summary cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
-        <SummaryCard
-          label="Total Pending"
-          value={formatZAR(PAYMENTS.filter((p) => p.status.startsWith("pending")).reduce((s, p) => s + p.certifiedAmount, 0))}
-          icon={Clock}
-          accent="bg-warning/10 text-warning"
-          count={PAYMENTS.filter((p) => p.status.startsWith("pending")).length}
-        />
-        <SummaryCard
-          label="Overdue"
-          value={formatZAR(totalOverdue)}
-          icon={AlertCircle}
-          accent="bg-danger/10 text-danger"
-          count={PAYMENTS.filter((p) => p.status === "overdue").length}
-        />
-        <SummaryCard
-          label="Paid This Month"
-          value={formatZAR(PAYMENTS.filter((p) => p.status === "paid").reduce((s, p) => s + p.certifiedAmount, 0))}
-          icon={CheckCircle}
-          accent="bg-success/10 text-success"
-          count={PAYMENTS.filter((p) => p.status === "paid").length}
-        />
-        <SummaryCard
-          label="Total Outstanding"
-          value={formatZAR(totalPending)}
-          icon={CreditCard}
-          accent="bg-primary/10 text-primary"
-          count={PAYMENTS.filter((p) => p.status.startsWith("pending") || p.status === "overdue").length}
-        />
-      </div>
-
-      {/* Filters */}
-      <div className="border-b border-border">
-        <nav className="-mb-px flex gap-6">
-          {[
-            { id: "all" as StatusFilter, label: "All" },
-            { id: "pending" as StatusFilter, label: "Pending Approval" },
-            { id: "pending_pmu" as StatusFilter, label: "Awaiting PMU" },
-            { id: "pending_cfo" as StatusFilter, label: "Awaiting CFO" },
-            { id: "overdue" as StatusFilter, label: "Overdue" },
-            { id: "paid" as StatusFilter, label: "Paid" },
-          ].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setStatusFilter(item.id)}
-              className={[
-                "border-b-2 px-1 py-3 text-sm font-medium transition-colors",
-                statusFilter === item.id
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground",
-              ].join(" ")}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-      </div>
-
-      {/* Payments table */}
-      <div className="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
-              <tr>
-                <th className="px-6 py-3 font-medium">Certificate</th>
-                <th className="px-6 py-3 font-medium">Tender</th>
-                <th className="px-6 py-3 font-medium">Amount</th>
-                <th className="px-6 py-3 font-medium">Invoice Date</th>
-                <th className="px-6 py-3 font-medium">Due Date</th>
-                <th className="px-6 py-3 font-medium">Status</th>
-                <th className="px-6 py-3 font-medium text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredPayments.map((payment, i) => (
-                <PaymentRow
-                  key={payment.id}
-                  payment={payment}
-                  striped={i % 2 === 1}
-                  expanded={expandedCert === payment.id}
-                  onToggle={() => setExpandedCert(expandedCert === payment.id ? null : payment.id)}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {filteredPayments.length === 0 && (
-          <div className="p-12 text-center">
-            <CreditCard className="mx-auto h-12 w-12 text-muted-foreground/50" />
-            <h3 className="mt-4 text-lg font-medium text-foreground">No payments found</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              No payment certificates match this filter
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function SummaryCard({
-  label,
-  value,
-  icon: Icon,
-  accent,
-  count,
-}: {
-  label: string;
-  value: string;
-  icon: typeof CreditCard;
-  accent: string;
-  count: number;
-}) {
-  return (
-    <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            {label}
-          </div>
-          <div className="mt-1 text-xl font-semibold text-foreground">{value}</div>
-          <div className="mt-1 text-xs text-muted-foreground">{count} certificate(s)</div>
-        </div>
-        <div className={`flex h-10 w-10 items-center justify-center rounded-md ${accent}`}>
-          <Icon className="h-5 w-5" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PaymentRow({
-  payment,
-  striped,
-  expanded,
-  onToggle,
-}: {
-  payment: (typeof PAYMENTS)[0];
-  striped: boolean;
-  expanded: boolean;
-  onToggle: () => void;
-}) {
-  const statusConfig: Record<string, { label: string; className: string }> = {
-    pending_pmu: { label: "Awaiting PMU", className: "bg-warning/10 text-warning border-warning/20" },
-    pending_cfo: { label: "Awaiting CFO", className: "bg-warning/10 text-warning border-warning/20" },
-    overdue: { label: "Overdue", className: "bg-danger/10 text-danger border-danger/20" },
-    paid: { label: "Paid", className: "bg-success/10 text-success border-success/20" },
-  };
-
-  const status = statusConfig[payment.status] ?? statusConfig.pending_pmu;
-  const isOverdue = payment.status === "overdue" || (payment.status !== "paid" && new Date(payment.dueDate) < new Date());
-
-  return (
-    <>
-      <tr className={striped ? "bg-muted/30" : "bg-card"}>
-        <td className="px-6 py-4">
-          <span className="font-mono text-xs font-medium text-muted-foreground">
-            {payment.certificateNumber}
-          </span>
-        </td>
-        <td className="px-6 py-4">
-          <div>
-            <div className="font-medium text-foreground">{payment.tenderRef}</div>
-            <div className="text-xs text-muted-foreground line-clamp-1">
-              {payment.tenderTitle}
+      {/* Contractor View Notice */}
+      {contractorView && (
+        <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+          <div className="flex items-center gap-3">
+            <Shield className="h-5 w-5 text-primary" />
+            <div>
+              <div className="font-medium text-foreground">Contractor Transparency View</div>
+              <p className="mt-1 text-sm text-muted-foreground">
+                You can see exactly where your payment is in the approval chain at all times. 
+                Any delays are visible and the responsible official is notified.
+              </p>
             </div>
           </div>
-        </td>
-        <td className="px-6 py-4 font-medium text-foreground">
-          {formatZAR(payment.certifiedAmount)}
-        </td>
-        <td className="px-6 py-4 text-muted-foreground">
-          {formatDate(payment.invoiceDate)}
-        </td>
-        <td className={`px-6 py-4 ${isOverdue ? "text-danger font-medium" : "text-muted-foreground"}`}>
-          <div className="flex items-center gap-1.5">
-            <Calendar className="h-4 w-4" />
-            {formatDate(payment.dueDate)}
-            {isOverdue && <AlertCircle className="h-4 w-4" />}
+        </div>
+      )}
+
+      {/* Section 1: Active Payment Certificates */}
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold text-foreground">
+          Active Payment Certificates ({ACTIVE_CERTIFICATES.length})
+        </h2>
+
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {ACTIVE_CERTIFICATES.map((cert) => (
+            <PaymentCertificateCard
+              key={cert.id}
+              certificate={cert}
+              selected={selectedCert === cert.id}
+              onSelect={() => setSelectedCert(selectedCert === cert.id ? null : cert.id)}
+              contractorView={contractorView}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Section 2: Payment History */}
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold text-foreground">Payment History</h2>
+        <div className="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr>
+                  <th className="px-6 py-3 font-medium">Certificate No.</th>
+                  <th className="px-6 py-3 font-medium">Period</th>
+                  <th className="px-6 py-3 font-medium">Certified Amount</th>
+                  <th className="px-6 py-3 font-medium">Released Date</th>
+                  <th className="px-6 py-3 font-medium">Days Taken</th>
+                  <th className="px-6 py-3 font-medium">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {PAYMENT_HISTORY.map((payment, i) => (
+                  <tr key={payment.id} className={i % 2 === 1 ? "bg-muted/30" : "bg-card"}>
+                    <td className="px-6 py-3 font-mono text-sm">{payment.id}</td>
+                    <td className="px-6 py-3 text-muted-foreground">{payment.period}</td>
+                    <td className="px-6 py-3 font-medium text-foreground">{formatZAR(payment.amount)}</td>
+                    <td className="px-6 py-3 text-muted-foreground">{formatDate(payment.releasedDate)}</td>
+                    <td className="px-6 py-3">
+                      <span className={`font-medium ${
+                        payment.daysTaken < 20 ? "text-success" :
+                        payment.daysTaken <= 28 ? "text-warning" :
+                        payment.daysTaken <= 30 ? "text-danger" :
+                        "text-danger font-bold"
+                      }`}>
+                        {payment.daysTaken} days
+                      </span>
+                    </td>
+                    <td className="px-6 py-3">
+                      <span className={`inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium ${
+                        payment.status === "paid"
+                          ? "bg-success/10 text-success border-success/20"
+                          : "bg-danger/10 text-danger border-danger/20"
+                      }`}>
+                        {payment.status === "paid" ? "Paid" : "Overdue"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </td>
-        <td className="px-6 py-4">
-          <span className={`inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium ${status.className}`}>
-            {status.label}
-          </span>
-        </td>
-        <td className="px-6 py-4 text-right">
-          <div className="flex items-center justify-end gap-2">
-            <button
-              onClick={onToggle}
-              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted"
-            >
-              <Eye className="h-3.5 w-3.5" />
-              {expanded ? "Hide" : "Details"}
-            </button>
-          </div>
-        </td>
-      </tr>
-      {expanded && (
-        <tr className={striped ? "bg-muted/20" : "bg-muted/5"}>
-          <td colSpan={7} className="px-6 py-4">
+        </div>
+      </section>
+
+      {/* Contractor View Message */}
+      {contractorView && selectedCertificate && (
+        <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+          <h3 className="font-semibold text-foreground">Your Payment Status</h3>
+          <div className="mt-4 flex items-center justify-between">
             <div>
-              <h4 className="text-sm font-semibold text-foreground mb-3">Approval Workflow</h4>
-              <div className="flex flex-wrap items-center gap-2">
-                <ApprovalStep
-                  label="QS"
-                  name="Quantity Surveyor"
-                  approved={payment.approvals.qs}
-                  date={payment.approvals.qsDate}
-                  index={0}
-                  total={6}
-                />
-                <ApprovalStep
-                  label="PA"
-                  name="Project Architect"
-                  approved={payment.approvals.pa}
-                  date={payment.approvals.paDate}
-                  index={1}
-                  total={6}
-                />
-                <ApprovalStep
-                  label="PM"
-                  name="Project Manager"
-                  approved={payment.approvals.pm}
-                  date={payment.approvals.pmDate}
-                  index={2}
-                  total={6}
-                />
-                <ApprovalStep
-                  label="PMU"
-                  name="Project Management Unit"
-                  approved={payment.approvals.pmu}
-                  date={payment.approvals.pmuDate}
-                  index={3}
-                  total={6}
-                />
-                <ApprovalStep
-                  label="CFO"
-                  name="Chief Financial Officer"
-                  approved={payment.approvals.cfo}
-                  date={payment.approvals.cfoDate}
-                  index={4}
-                  total={6}
-                />
-                <ApprovalStep
-                  label="MM"
-                  name="Municipal Manager"
-                  approved={payment.approvals.mm}
-                  date={payment.approvals.mmDate}
-                  index={5}
-                  total={6}
-                />
+              <div className="text-sm text-muted-foreground">Current Step</div>
+              <div className="mt-1 text-xl font-bold text-foreground">
+                {PAYMENT_STEPS.find((s) => s.id === selectedCertificate.currentStep)?.label}
               </div>
             </div>
-          </td>
-        </tr>
+            <div className="text-right">
+              <div className="text-sm text-muted-foreground">Expected Payment Date</div>
+              <div className="mt-1 text-xl font-bold text-foreground">
+                {formatDate(addDays(new Date(), selectedCertificate.daysRemaining))}
+              </div>
+            </div>
+          </div>
+
+          {selectedCertificate.daysRemaining < 0 && (
+            <div className="mt-4 flex items-start gap-3 rounded-md border border-danger/20 bg-danger/5 p-4">
+              <AlertTriangle className="h-5 w-5 text-danger shrink-0 mt-0.5" />
+              <div>
+                <div className="font-medium text-danger">Your payment is overdue</div>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  The responsible official has been notified. Interest is accumulating at 1.5% per day.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
       )}
-    </>
+    </div>
   );
 }
 
-function ApprovalStep({
-  label,
-  name,
-  approved,
-  date,
-  index,
-  total,
+function PaymentCertificateCard({
+  certificate,
+  selected,
+  onSelect,
+  contractorView,
 }: {
-  label: string;
-  name: string;
-  approved: boolean;
-  date: string | null;
-  index: number;
-  total: number;
+  certificate: (typeof ACTIVE_CERTIFICATES)[0];
+  selected: boolean;
+  onSelect: () => void;
+  contractorView: boolean;
 }) {
-  const isLast = index === total - 1;
-  
+  const statusColors = {
+    pending_cfo: "border-warning/30 bg-warning/5",
+    pending_pmu: "border-warning/30 bg-warning/5",
+    overdue: "border-danger/30 bg-danger/5",
+    paid: "border-success/30 bg-success/5",
+  };
+
+  const clockColor = certificate.daysRemaining > 15 ? "text-success" : certificate.daysRemaining > 7 ? "text-warning" : "text-danger";
+
   return (
-    <div className="flex items-center">
-      <div className="flex flex-col items-center">
-        <div
-          className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-bold ${
-            approved
-              ? "border-success bg-success/10 text-success"
-              : "border-muted-foreground/30 bg-muted text-muted-foreground"
-          }`}
-          title={name}
-        >
-          {approved ? <CheckCircle className="h-5 w-5" /> : label}
-        </div>
-        <div className="mt-1 text-xs font-medium text-foreground">{label}</div>
-        <div className="text-[10px] text-muted-foreground text-center max-w-[60px]">
-          {date ? formatDate(date) : "Pending"}
+    <div
+      className={`rounded-lg border-2 bg-card shadow-sm overflow-hidden transition-all ${
+        statusColors[certificate.status as keyof typeof statusColors]
+      } ${selected ? "ring-2 ring-primary" : ""}`}
+    >
+      {/* Colored Header */}
+      <div className={`px-6 py-4 ${
+        certificate.status === "overdue" ? "bg-danger/10" :
+        certificate.status === "paid" ? "bg-success/10" :
+        "bg-warning/10"
+      }`}>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div className="font-mono text-sm font-bold text-foreground">{certificate.certificateNumber}</div>
+            <div className="mt-1 text-sm text-muted-foreground">{certificate.tenderRef}</div>
+            <div className="mt-0.5 text-xs text-muted-foreground">{certificate.tenderTitle}</div>
+          </div>
+          <div className="text-right">
+            <div className="text-2xl font-bold text-foreground">{formatZAR(certificate.certifiedAmount)}</div>
+            <span className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${
+              certificate.status === "overdue" ? "bg-danger/20 text-danger border-danger/30" :
+              certificate.status === "paid" ? "bg-success/20 text-success border-success/30" :
+              "bg-warning/20 text-warning border-warning/30"
+            }`}>
+              {certificate.status === "pending_cfo" ? "Pending CFO" :
+               certificate.status === "pending_pmu" ? "Pending PMU" :
+               certificate.status === "overdue" ? "OVERDUE" : "Paid"}
+            </span>
+          </div>
         </div>
       </div>
-      {!isLast && (
-        <div className={`h-0.5 w-6 mx-1 ${
-          approved ? "bg-success" : "bg-muted-foreground/30"
-        }`} />
-      )}
+
+      {/* Body */}
+      <div className="p-6">
+        {/* Contractor Name */}
+        <div className="mb-4">
+          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Contractor</div>
+          <div className="mt-1 font-medium text-foreground">{certificate.contractorName}</div>
+        </div>
+
+        {/* Payment Chain Stepper */}
+        <div className="mb-6">
+          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-3">
+            Payment Chain Progress
+          </div>
+          <div className="flex items-center justify-between">
+            {PAYMENT_STEPS.map((step, i) => {
+              const approval = certificate.approvals[step.id as keyof typeof certificate.approvals];
+              const isCompleted = approval?.completed;
+              const isCurrent = step.id === certificate.currentStep;
+
+              return (
+                <div key={step.id} className="flex items-center">
+                  <div className="flex flex-col items-center">
+                    <div className={`h-8 w-8 rounded-full flex items-center justify-center ${
+                      isCompleted ? "bg-success/20 text-success" :
+                      isCurrent ? "bg-primary/20 text-primary animate-pulse" :
+                      "bg-muted text-muted-foreground"
+                    }`}>
+                      {isCompleted ? (
+                        <CheckCircle className="h-5 w-5" />
+                      ) : isCurrent ? (
+                        <div className="h-3 w-3 rounded-full bg-primary" />
+                      ) : (
+                        <div className="h-2 w-2 rounded-full bg-current" />
+                      )}
+                    </div>
+                    <div className="mt-1 text-[10px] text-center max-w-[50px] text-muted-foreground">
+                      {step.label.split(" ")[0]}
+                    </div>
+                  </div>
+                  {i < PAYMENT_STEPS.length - 1 && (
+                    <div className={`h-0.5 w-4 mx-1 ${
+                      isCompleted ? "bg-success" : "bg-muted"
+                    }`} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 30-Day Clock */}
+        <div className="flex items-center justify-between rounded-lg border border-border bg-muted/30 p-4 mb-4">
+          <div>
+            <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              30-Day Statutory Window
+            </div>
+            <div className="mt-1 text-2xl font-bold">
+              <span className={certificate.daysRemaining < 0 ? "text-danger" : clockColor}>
+                {Math.abs(certificate.daysRemaining)} days
+              </span>
+              {certificate.daysRemaining < 0 ? " overdue" : " remaining"}
+            </div>
+          </div>
+          <CircularClock daysRemaining={certificate.daysRemaining} />
+        </div>
+
+        {/* Escrow Status */}
+        <div className="rounded-md border border-border bg-muted/30 p-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Lock className={`h-4 w-4 ${certificate.escrowStatus === "available" ? "text-success" : "text-warning"}`} />
+              <span className="text-sm font-medium text-foreground">Escrow: Ring-fenced</span>
+            </div>
+            <div className="text-right">
+              <div className="text-sm font-medium text-foreground">{formatZAR(certificate.escrowBalance)}</div>
+              <span className={`text-xs ${
+                certificate.escrowStatus === "available" ? "text-success" : "text-warning"
+              }`}>
+                {certificate.escrowStatus === "available" ? "Funds available" : "TOP-UP REQUIRED"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <button
+          onClick={onSelect}
+          className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          {selected ? "Hide Details" : "View Details"}
+          <ChevronRight className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function CircularClock({ daysRemaining }: { daysRemaining: number }) {
+  const maxDays = 30;
+  const percentage = Math.max(0, Math.min(100, (daysRemaining / maxDays) * 100));
+  const circumference = 2 * Math.PI * 35;
+  const offset = circumference * (1 - percentage / 100);
+
+  const strokeColor = daysRemaining > 15 ? "#1D9E75" : daysRemaining > 7 ? "#BA7517" : "#993C1D";
+
+  return (
+    <div className="relative h-16 w-16">
+      <svg className="h-16 w-16 -rotate-90" viewBox="0 0 72 72">
+        <circle
+          cx="36"
+          cy="36"
+          r="35"
+          className="stroke-muted"
+          strokeWidth="6"
+          fill="none"
+        />
+        <circle
+          cx="36"
+          cy="36"
+          r="35"
+          stroke={strokeColor}
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="transition-all"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className={`text-xs font-bold ${daysRemaining > 15 ? "text-success" : daysRemaining > 7 ? "text-warning" : "text-danger"}`}>
+          {daysRemaining > 0 ? daysRemaining : 0}
+        </span>
+      </div>
     </div>
   );
 }
@@ -483,4 +465,10 @@ function formatZAR(amount: number) {
     currency: "ZAR",
     maximumFractionDigits: 0,
   }).format(amount);
+}
+
+function addDays(date: Date, days: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
 }
