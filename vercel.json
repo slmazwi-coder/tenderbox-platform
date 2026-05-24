@@ -3,5 +3,11 @@
   "installCommand": "bun install",
   "framework": "tanstack-start",
   "devCommand": "bun run dev",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
 }
