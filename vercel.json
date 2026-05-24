@@ -1,0 +1,7 @@
+{
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "framework": null,
+  "devCommand": "bun run dev",
+  "regions": ["jnb1"]
+}
