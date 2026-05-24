@@ -1,0 +1,6 @@
+wrangler.jsonc
+.lovable
+bun.lock
+node_modules
+.git
+.env.local
