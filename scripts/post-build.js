@@ -22,10 +22,11 @@ if (fs.existsSync(serverCssDir)) {
   }
 }
 
-// Create index.html for SPA
+// Create index.html for SPA (client-side rendering only)
 const timestamp = new Date().toISOString();
 const indexHtml = `<!DOCTYPE html>
 <!-- Generated: ${timestamp} -->
+<!-- CSR mode: No server-side rendering -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
