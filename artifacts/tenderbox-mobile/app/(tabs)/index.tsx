@@ -111,6 +111,35 @@ export default function DashboardScreen() {
         </View>
       </View>
 
+      {/* More screens */}
+      <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border, marginBottom: 14 }]}>
+        <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>More</Text>
+        {([
+          { label: "Company Profile", sub: "Documents, readiness & experience", icon: "user", route: "/profile" },
+          { label: "Projects", sub: "Track construction contracts", icon: "briefcase", route: "/projects" },
+          { label: "Reports & Analytics", sub: "Bid history and sector performance", icon: "bar-chart-2", route: "/reports" },
+          { label: "Evaluation", sub: "Gate 2 bid adjudication & BAC sign-off", icon: "award", route: "/evaluation" },
+        ] as const).map((item, i, arr) => (
+          <Pressable
+            key={item.route}
+            style={[
+              styles.moreRow,
+              i < arr.length - 1 && { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
+            ]}
+            onPress={() => router.push(item.route as any)}
+          >
+            <View style={[styles.moreIcon, { backgroundColor: colors.primary + "18" }]}>
+              <Feather name={item.icon} size={16} color={colors.primary} />
+            </View>
+            <View style={{ flex: 1, marginLeft: 12 }}>
+              <Text style={[styles.moreLabel, { color: colors.foreground }]}>{item.label}</Text>
+              <Text style={[styles.moreSub, { color: colors.mutedForeground }]}>{item.sub}</Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
+        ))}
+      </View>
+
       {/* Recent activity */}
       <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border, marginBottom: 14 }]}>
         <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>Recent Tender Activity</Text>
@@ -163,4 +192,8 @@ const styles = StyleSheet.create({
   actDate: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 1 },
   badge: { borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4, borderWidth: 1 },
   badgeText: { fontSize: 11, fontFamily: "Inter_600SemiBold" },
+  moreRow: { flexDirection: "row", alignItems: "center", paddingVertical: 12 },
+  moreIcon: { width: 36, height: 36, borderRadius: 9, alignItems: "center", justifyContent: "center" },
+  moreLabel: { fontSize: 14, fontFamily: "Inter_500Medium" },
+  moreSub: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 2 },
 });

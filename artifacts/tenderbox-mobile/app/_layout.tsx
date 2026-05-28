@@ -22,8 +22,12 @@ const queryClient = new QueryClient();
 
 function RootLayoutNav() {
   return (
-    <Stack screenOptions={{ headerBackTitle: "Back" }}>
+    <Stack screenOptions={{ headerBackTitle: "Back", headerTintColor: "#1F4E79" }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="profile" options={{ title: "Company Profile" }} />
+      <Stack.Screen name="projects" options={{ title: "Projects" }} />
+      <Stack.Screen name="reports" options={{ title: "Reports & Analytics" }} />
+      <Stack.Screen name="evaluation" options={{ title: "Gate 2 Evaluation" }} />
     </Stack>
   );
 }
