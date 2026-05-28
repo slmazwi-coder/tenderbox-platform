@@ -22,11 +22,8 @@ if (fs.existsSync(serverCssDir)) {
   }
 }
 
-// Create index.html for SPA (client-side rendering only)
-const timestamp = new Date().toISOString();
+// Create index.html for SPA with loading state
 const indexHtml = `<!DOCTYPE html>
-<!-- Generated: ${timestamp} -->
-<!-- CSR mode: No server-side rendering -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -37,6 +34,10 @@ const indexHtml = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="./assets/styles-C5oLp3le.css" />
+    <style>
+      #app:empty { display: flex; align-items: center; justify-content: center; height: 100vh; background: oklch(98.4% .003 247.858); font-family: Inter, system-ui, sans-serif; }
+      #app:empty::after { content: "Loading Tenderbox..."; color: oklch(40.2% .084 250); }
+    </style>
   </head>
   <body>
     <div id="app"></div>
