@@ -1,9 +1,8 @@
 {
-  "buildCommand": "bun run build",
-  "installCommand": "bun install",
-  "framework": "tanstack-start",
-  "devCommand": "bun run dev",
-  "outputDirectory": "dist",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "framework": null,
+  "outputDirectory": "dist/client",
   "rewrites": [
     {
       "source": "/:path*",
