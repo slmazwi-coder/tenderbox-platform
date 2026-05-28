@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/tenderbox-mobile/"
+title = "Tenderbox Mobile"
+version = "1.0.0"
+id = "artifacts/tenderbox-mobile"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/tenderbox-mobile/" ]
+localPort = 22546
+
+[services.development]
+run = "pnpm --filter @workspace/tenderbox-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/tenderbox-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/tenderbox-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "22546"
+BASE_PATH = "/tenderbox-mobile/"
