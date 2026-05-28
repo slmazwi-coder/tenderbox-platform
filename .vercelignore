@@ -4,4 +4,3 @@ bun.lock
 node_modules
 .git
 .env.local
-# Don't include dist - Vercel builds from source
