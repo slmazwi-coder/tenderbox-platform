@@ -1,3 +1,5 @@
+// Post-build script for Vercel static deployment
+// This script generates index.html from dist/server for SPA deployment
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -21,7 +23,9 @@ if (fs.existsSync(serverCssDir)) {
 }
 
 // Create index.html for SPA
+const timestamp = new Date().toISOString();
 const indexHtml = `<!DOCTYPE html>
+<!-- Generated: ${timestamp} -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
