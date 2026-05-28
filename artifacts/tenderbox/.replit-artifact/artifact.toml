@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Tenderbox"
+version = "1.0.0"
+id = "artifacts/tenderbox"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18794
+
+[services.development]
+run = "pnpm --filter @workspace/tenderbox run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/tenderbox", "run", "build" ]
+publicDir = "artifacts/tenderbox/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18794"
+BASE_PATH = "/"

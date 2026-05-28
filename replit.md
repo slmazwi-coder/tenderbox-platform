@@ -1,36 +1,40 @@
-# [Project name]
+# Tenderbox
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A South African government procurement platform for managing tenders, bids, compliance, payments, and projects.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/tenderbox run dev` — run the frontend (workflow: `artifacts/tenderbox: web`)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 19 + Vite 7 + TanStack Router (client-side SPA)
+- UI: Radix UI, Tailwind CSS v4, lucide-react, tw-animate-css
+- Theme: deep navy primary (#1F4E79), burnt orange accent, oklch color system
+- Fonts: Inter (Google Fonts)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/tenderbox/src/routes/` — TanStack Router file-based routes (index, tenders, bids, compliance, evaluation, payments, profile, projects, reports)
+- `artifacts/tenderbox/src/components/` — AppSidebar, AppHeader, and shadcn/ui components
+- `artifacts/tenderbox/src/styles.css` — Tailwind v4 theme with oklch color variables
+- `artifacts/tenderbox/src/routeTree.gen.ts` — auto-generated route tree (do not edit)
+- `artifacts/tenderbox/src/router.tsx` — TanStack Router + QueryClient setup
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Pure client-side SPA: TanStack Router with SSR disabled, no server rendering
+- TanStack Start was stripped out during migration — only `@tanstack/react-router` is used
+- `head()` route metadata was removed (TanStack Start feature); meta tags live in `index.html`
+- No backend API — all data is static/demo data within route components
+- Supabase integration files removed as they relied on TanStack Start middleware
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Tenderbox helps South African municipalities and public sector procurement officers manage the full tender lifecycle: browse open tenders, submit bids, track compliance documents, manage payments, and view evaluation and project reports.
 
 ## User preferences
 
@@ -38,7 +42,9 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Do NOT run `pnpm dev` at the workspace root — use `restart_workflow` or `pnpm --filter @workspace/tenderbox run dev`
+- `routeTree.gen.ts` is auto-generated — edit route files in `src/routes/` instead
+- The `head()` option in `createFileRoute()` is a TanStack Start feature and is not available in plain TanStack Router — use Vite's `index.html` for meta tags
 
 ## Pointers
 
