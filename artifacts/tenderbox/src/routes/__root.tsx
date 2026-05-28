@@ -4,10 +4,12 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
 } from "@tanstack/react-router";
 
 import { AppSidebar } from "@/components/AppSidebar";
 import { AppHeader } from "@/components/AppHeader";
+import { DemoProvider, useDemoMode } from "@/contexts/DemoContext";
 
 function NotFoundComponent() {
   return (
@@ -72,20 +74,53 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
-function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+function AppShell() {
+  const { isDemoMode } = useDemoMode();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isLanding = pathname === "/landing";
+
+  if (isLanding) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Outlet />
+      </div>
+    );
+  }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background">
+      {isDemoMode && (
+        <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-3 bg-warning px-4 py-2 text-sm font-semibold text-warning-foreground">
+          <span className="inline-block h-2 w-2 rounded-full bg-warning-foreground/80 animate-pulse" />
+          Demo Mode Active — Tenderbox Government Demonstration
+        </div>
+      )}
+      <div className={isDemoMode ? "pt-9" : ""}>
         <AppSidebar />
         <div className="pl-60">
           <AppHeader />
           <main className="p-6">
             <Outlet />
           </main>
+          <footer className="border-t border-border bg-card px-6 py-3">
+            <p className="text-center text-[11px] text-muted-foreground">
+              All data encrypted&nbsp;·&nbsp;Audit trail active&nbsp;·&nbsp;MFMA compliant&nbsp;·&nbsp;Powered by Tenderbox
+            </p>
+          </footer>
         </div>
       </div>
+    </div>
+  );
+}
+
+function RootComponent() {
+  const { queryClient } = Route.useRouteContext();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <DemoProvider>
+        <AppShell />
+      </DemoProvider>
     </QueryClientProvider>
   );
 }

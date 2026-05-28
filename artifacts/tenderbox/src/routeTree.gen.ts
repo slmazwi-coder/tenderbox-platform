@@ -14,7 +14,9 @@ import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PaymentsRouteImport } from './routes/payments'
+import { Route as LandingRouteImport } from './routes/landing'
 import { Route as EvaluationRouteImport } from './routes/evaluation'
+import { Route as DemoRouteImport } from './routes/demo'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as BidsRouteImport } from './routes/bids'
 import { Route as IndexRouteImport } from './routes/index'
@@ -44,9 +46,19 @@ const PaymentsRoute = PaymentsRouteImport.update({
   path: '/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LandingRoute = LandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EvaluationRoute = EvaluationRouteImport.update({
   id: '/evaluation',
   path: '/evaluation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComplianceRoute = ComplianceRouteImport.update({
@@ -69,7 +81,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bids': typeof BidsRoute
   '/compliance': typeof ComplianceRoute
+  '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
+  '/landing': typeof LandingRoute
   '/payments': typeof PaymentsRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -80,7 +94,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bids': typeof BidsRoute
   '/compliance': typeof ComplianceRoute
+  '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
+  '/landing': typeof LandingRoute
   '/payments': typeof PaymentsRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -92,7 +108,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/bids': typeof BidsRoute
   '/compliance': typeof ComplianceRoute
+  '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
+  '/landing': typeof LandingRoute
   '/payments': typeof PaymentsRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -105,7 +123,9 @@ export interface FileRouteTypes {
     | '/'
     | '/bids'
     | '/compliance'
+    | '/demo'
     | '/evaluation'
+    | '/landing'
     | '/payments'
     | '/profile'
     | '/projects'
@@ -116,7 +136,9 @@ export interface FileRouteTypes {
     | '/'
     | '/bids'
     | '/compliance'
+    | '/demo'
     | '/evaluation'
+    | '/landing'
     | '/payments'
     | '/profile'
     | '/projects'
@@ -127,7 +149,9 @@ export interface FileRouteTypes {
     | '/'
     | '/bids'
     | '/compliance'
+    | '/demo'
     | '/evaluation'
+    | '/landing'
     | '/payments'
     | '/profile'
     | '/projects'
@@ -139,7 +163,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BidsRoute: typeof BidsRoute
   ComplianceRoute: typeof ComplianceRoute
+  DemoRoute: typeof DemoRoute
   EvaluationRoute: typeof EvaluationRoute
+  LandingRoute: typeof LandingRoute
   PaymentsRoute: typeof PaymentsRoute
   ProfileRoute: typeof ProfileRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -184,11 +210,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PaymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/landing': {
+      id: '/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof LandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/evaluation': {
       id: '/evaluation'
       path: '/evaluation'
       fullPath: '/evaluation'
       preLoaderRoute: typeof EvaluationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compliance': {
@@ -219,7 +259,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BidsRoute: BidsRoute,
   ComplianceRoute: ComplianceRoute,
+  DemoRoute: DemoRoute,
   EvaluationRoute: EvaluationRoute,
+  LandingRoute: LandingRoute,
   PaymentsRoute: PaymentsRoute,
   ProfileRoute: ProfileRoute,
   ProjectsRoute: ProjectsRoute,
@@ -229,4 +271,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
