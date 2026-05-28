@@ -15,6 +15,6 @@ router.subscribe("onRender", () => {
   router.isInitialRender = false;
 });
 
-if (rootElement.innerHTML) {
-  router.mount();
-}
+// Always mount the router - it's a client-side app
+// The innerHTML check is for SSR hydration which we're disabling
+router.mount();
