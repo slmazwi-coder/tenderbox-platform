@@ -10,16 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TendersRouteImport } from './routes/tenders'
+import { Route as SupplierRouteImport } from './routes/supplier'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as PscRouteImport } from './routes/psc'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ProfessionalRouteImport } from './routes/professional'
 import { Route as PaymentsRouteImport } from './routes/payments'
-import { Route as LoginRouteImport } from './routes/login'
+import { Route as OrgRouteImport } from './routes/org'
 import { Route as LandingRouteImport } from './routes/landing'
 import { Route as EvaluationRouteImport } from './routes/evaluation'
 import { Route as DemoRouteImport } from './routes/demo'
+import { Route as ConsultantRouteImport } from './routes/consultant'
+import { Route as ContractorRouteImport } from './routes/contractor'
 import { Route as ComplianceRouteImport } from './routes/compliance'
+import { Route as ClientRouteImport } from './routes/client'
 import { Route as BidsRouteImport } from './routes/bids'
+import { Route as AuditorRouteImport } from './routes/auditor'
+import { Route as AuthSignupRouteImport } from './routes/auth/signup'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TendersRoute = TendersRouteImport.update({
@@ -27,9 +36,19 @@ const TendersRoute = TendersRouteImport.update({
   path: '/tenders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupplierRoute = SupplierRouteImport.update({
+  id: '/supplier',
+  path: '/supplier',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PscRoute = PscRouteImport.update({
+  id: '/psc',
+  path: '/psc',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -42,14 +61,19 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfessionalRoute = ProfessionalRouteImport.update({
+  id: '/professional',
+  path: '/professional',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PaymentsRoute = PaymentsRouteImport.update({
   id: '/payments',
   path: '/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const OrgRoute = OrgRouteImport.update({
+  id: '/org',
+  path: '/org',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LandingRoute = LandingRouteImport.update({
@@ -67,14 +91,44 @@ const DemoRoute = DemoRouteImport.update({
   path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsultantRoute = ConsultantRouteImport.update({
+  id: '/consultant',
+  path: '/consultant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorRoute = ContractorRouteImport.update({
+  id: '/contractor',
+  path: '/contractor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ComplianceRoute = ComplianceRouteImport.update({
   id: '/compliance',
   path: '/compliance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientRoute = ClientRouteImport.update({
+  id: '/client',
+  path: '/client',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BidsRoute = BidsRouteImport.update({
   id: '/bids',
   path: '/bids',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditorRoute = AuditorRouteImport.update({
+  id: '/auditor',
+  path: '/auditor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -85,104 +139,167 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/auditor': typeof AuditorRoute
   '/bids': typeof BidsRoute
+  '/client': typeof ClientRoute
   '/compliance': typeof ComplianceRoute
+  '/consultant': typeof ConsultantRoute
+  '/contractor': typeof ContractorRoute
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
-  '/login': typeof LoginRoute
+  '/org': typeof OrgRoute
   '/payments': typeof PaymentsRoute
+  '/professional': typeof ProfessionalRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
+  '/psc': typeof PscRoute
   '/reports': typeof ReportsRoute
+  '/supplier': typeof SupplierRoute
   '/tenders': typeof TendersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/auditor': typeof AuditorRoute
   '/bids': typeof BidsRoute
+  '/client': typeof ClientRoute
   '/compliance': typeof ComplianceRoute
+  '/consultant': typeof ConsultantRoute
+  '/contractor': typeof ContractorRoute
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
-  '/login': typeof LoginRoute
+  '/org': typeof OrgRoute
   '/payments': typeof PaymentsRoute
+  '/professional': typeof ProfessionalRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
+  '/psc': typeof PscRoute
   '/reports': typeof ReportsRoute
+  '/supplier': typeof SupplierRoute
   '/tenders': typeof TendersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/auditor': typeof AuditorRoute
   '/bids': typeof BidsRoute
+  '/client': typeof ClientRoute
   '/compliance': typeof ComplianceRoute
+  '/consultant': typeof ConsultantRoute
+  '/contractor': typeof ContractorRoute
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
-  '/login': typeof LoginRoute
+  '/org': typeof OrgRoute
   '/payments': typeof PaymentsRoute
+  '/professional': typeof ProfessionalRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
+  '/psc': typeof PscRoute
   '/reports': typeof ReportsRoute
+  '/supplier': typeof SupplierRoute
   '/tenders': typeof TendersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/auditor'
     | '/bids'
+    | '/client'
     | '/compliance'
+    | '/consultant'
+    | '/contractor'
     | '/demo'
     | '/evaluation'
     | '/landing'
-    | '/login'
+    | '/org'
     | '/payments'
+    | '/professional'
     | '/profile'
     | '/projects'
+    | '/psc'
     | '/reports'
+    | '/supplier'
     | '/tenders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/auditor'
     | '/bids'
+    | '/client'
     | '/compliance'
+    | '/consultant'
+    | '/contractor'
     | '/demo'
     | '/evaluation'
     | '/landing'
-    | '/login'
+    | '/org'
     | '/payments'
+    | '/professional'
     | '/profile'
     | '/projects'
+    | '/psc'
     | '/reports'
+    | '/supplier'
     | '/tenders'
   id:
     | '__root__'
     | '/'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/auditor'
     | '/bids'
+    | '/client'
     | '/compliance'
+    | '/consultant'
+    | '/contractor'
     | '/demo'
     | '/evaluation'
     | '/landing'
-    | '/login'
+    | '/org'
     | '/payments'
+    | '/professional'
     | '/profile'
     | '/projects'
+    | '/psc'
     | '/reports'
+    | '/supplier'
     | '/tenders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+  AuditorRoute: typeof AuditorRoute
   BidsRoute: typeof BidsRoute
+  ClientRoute: typeof ClientRoute
   ComplianceRoute: typeof ComplianceRoute
+  ConsultantRoute: typeof ConsultantRoute
+  ContractorRoute: typeof ContractorRoute
   DemoRoute: typeof DemoRoute
   EvaluationRoute: typeof EvaluationRoute
   LandingRoute: typeof LandingRoute
-  LoginRoute: typeof LoginRoute
+  OrgRoute: typeof OrgRoute
   PaymentsRoute: typeof PaymentsRoute
+  ProfessionalRoute: typeof ProfessionalRoute
   ProfileRoute: typeof ProfileRoute
   ProjectsRoute: typeof ProjectsRoute
+  PscRoute: typeof PscRoute
   ReportsRoute: typeof ReportsRoute
+  SupplierRoute: typeof SupplierRoute
   TendersRoute: typeof TendersRoute
 }
 
@@ -195,11 +312,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TendersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/supplier': {
+      id: '/supplier'
+      path: '/supplier'
+      fullPath: '/supplier'
+      preLoaderRoute: typeof SupplierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reports': {
       id: '/reports'
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/psc': {
+      id: '/psc'
+      path: '/psc'
+      fullPath: '/psc'
+      preLoaderRoute: typeof PscRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
@@ -216,6 +347,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/professional': {
+      id: '/professional'
+      path: '/professional'
+      fullPath: '/professional'
+      preLoaderRoute: typeof ProfessionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/payments': {
       id: '/payments'
       path: '/payments'
@@ -223,18 +361,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PaymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/org': {
+      id: '/org'
+      path: '/org'
+      fullPath: '/org'
+      preLoaderRoute: typeof OrgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/landing': {
       id: '/landing'
       path: '/landing'
       fullPath: '/landing'
       preLoaderRoute: typeof LandingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/evaluation': {
@@ -251,6 +389,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/consultant': {
+      id: '/consultant'
+      path: '/consultant'
+      fullPath: '/consultant'
+      preLoaderRoute: typeof ConsultantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contractor': {
+      id: '/contractor'
+      path: '/contractor'
+      fullPath: '/contractor'
+      preLoaderRoute: typeof ContractorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compliance': {
       id: '/compliance'
       path: '/compliance'
@@ -258,11 +410,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComplianceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/client': {
+      id: '/client'
+      path: '/client'
+      fullPath: '/client'
+      preLoaderRoute: typeof ClientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bids': {
       id: '/bids'
       path: '/bids'
       fullPath: '/bids'
       preLoaderRoute: typeof BidsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auditor': {
+      id: '/auditor'
+      path: '/auditor'
+      fullPath: '/auditor'
+      preLoaderRoute: typeof AuditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -277,16 +457,25 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  AuditorRoute: AuditorRoute,
   BidsRoute: BidsRoute,
+  ClientRoute: ClientRoute,
   ComplianceRoute: ComplianceRoute,
+  ConsultantRoute: ConsultantRoute,
+  ContractorRoute: ContractorRoute,
   DemoRoute: DemoRoute,
   EvaluationRoute: EvaluationRoute,
   LandingRoute: LandingRoute,
-  LoginRoute: LoginRoute,
+  OrgRoute: OrgRoute,
   PaymentsRoute: PaymentsRoute,
+  ProfessionalRoute: ProfessionalRoute,
   ProfileRoute: ProfileRoute,
   ProjectsRoute: ProjectsRoute,
+  PscRoute: PscRoute,
   ReportsRoute: ReportsRoute,
+  SupplierRoute: SupplierRoute,
   TendersRoute: TendersRoute,
 }
 export const routeTree = rootRouteImport

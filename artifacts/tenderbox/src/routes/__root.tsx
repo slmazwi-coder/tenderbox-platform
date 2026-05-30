@@ -1,5 +1,5 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -15,7 +15,9 @@ import { DemoProvider, useDemoMode } from "@/contexts/DemoContext";
 import { ToastProvider } from "@/contexts/ToastContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 
-const PUBLIC_PATHS = ["/login", "/landing"];
+function isPublicPath(pathname: string): boolean {
+  return pathname.startsWith("/auth/") || pathname === "/landing";
+}
 
 function NotFoundComponent() {
   return (
@@ -27,7 +29,10 @@ function NotFoundComponent() {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <div className="mt-6">
-          <Link to="/" className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
             Go home
           </Link>
         </div>
@@ -42,13 +47,26 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page didn't load</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Something went wrong. Try refreshing or head back home.</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          This page didn't load
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Something went wrong. Try refreshing or head back home.
+        </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button onClick={() => { router.invalidate(); reset(); }} className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+          <button
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
             Try again
           </button>
-          <a href="/" className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent">
+          <a
+            href="/"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          >
             Go home
           </a>
         </div>
@@ -67,11 +85,11 @@ function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
-  const isPublic = PUBLIC_PATHS.includes(pathname);
+  const isPublic = isPublicPath(pathname);
 
   useEffect(() => {
     if (!loading && !user && !isPublic) {
-      navigate({ to: "/login" });
+      navigate({ to: "/auth/login" });
     }
   }, [loading, user, isPublic, navigate]);
 
@@ -94,7 +112,7 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 function AppShell() {
   const { isDemoMode } = useDemoMode();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isPublic = PUBLIC_PATHS.includes(pathname);
+  const isPublic = isPublicPath(pathname);
 
   if (isPublic) {
     return (
@@ -108,7 +126,7 @@ function AppShell() {
     <div className="min-h-screen bg-background">
       {isDemoMode && (
         <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-3 bg-warning px-4 py-2 text-sm font-semibold text-warning-foreground">
-          <span className="inline-block h-2 w-2 rounded-full bg-warning-foreground/80 animate-pulse" />
+          <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-warning-foreground/80" />
           Demo Mode Active — Tenderbox Government Demonstration
         </div>
       )}
@@ -121,7 +139,8 @@ function AppShell() {
           </main>
           <footer className="border-t border-border bg-card px-6 py-3">
             <p className="text-center text-[11px] text-muted-foreground">
-              All data encrypted&nbsp;·&nbsp;Audit trail active&nbsp;·&nbsp;MFMA compliant&nbsp;·&nbsp;Powered by Tenderbox
+              All data encrypted&nbsp;·&nbsp;Audit trail active&nbsp;·&nbsp;MFMA
+              compliant&nbsp;·&nbsp;Powered by Tenderbox
             </p>
           </footer>
         </div>

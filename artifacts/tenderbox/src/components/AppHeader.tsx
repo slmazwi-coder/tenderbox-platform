@@ -5,6 +5,14 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const TITLES: Record<string, string> = {
   "/": "Dashboard",
+  "/contractor": "Dashboard",
+  "/client": "Dashboard",
+  "/consultant": "Dashboard",
+  "/professional": "Dashboard",
+  "/psc": "Dashboard",
+  "/org": "Dashboard",
+  "/supplier": "Dashboard",
+  "/auditor": "Dashboard",
   "/profile": "My Profile",
   "/compliance": "Compliance Documents",
   "/tenders": "Active Tenders",
@@ -32,15 +40,13 @@ export function AppHeader() {
 
   const displayName = profile?.display_name ?? user?.email ?? "User";
   const roleLabel = profile?.role
-    ? profile.role
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase())
+    ? profile.role.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
     : "Authenticated";
   const initials = getInitials(profile?.display_name ?? user?.email);
 
   const handleSignOut = async () => {
     await signOut();
-    navigate({ to: "/login" });
+    navigate({ to: "/auth/login" });
   };
 
   return (
@@ -74,14 +80,14 @@ export function AppHeader() {
           <div className="text-xs text-muted-foreground">{roleLabel}</div>
         </div>
 
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold select-none">
+        <div className="flex h-9 w-9 select-none items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
           {initials}
         </div>
 
         <button
           onClick={handleSignOut}
           title="Sign out"
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <LogOut className="h-4 w-4" />
         </button>
