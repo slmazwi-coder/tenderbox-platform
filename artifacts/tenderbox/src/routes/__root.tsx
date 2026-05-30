@@ -1,16 +1,21 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import {
   Outlet,
   Link,
   createRootRouteWithContext,
   useRouter,
   useRouterState,
+  useNavigate,
 } from "@tanstack/react-router";
 
 import { AppSidebar } from "@/components/AppSidebar";
 import { AppHeader } from "@/components/AppHeader";
 import { DemoProvider, useDemoMode } from "@/contexts/DemoContext";
 import { ToastProvider } from "@/contexts/ToastContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+
+const PUBLIC_PATHS = ["/login", "/landing"];
 
 function NotFoundComponent() {
   return (
@@ -58,12 +63,40 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+function AuthGate({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const isPublic = PUBLIC_PATHS.includes(pathname);
+
+  useEffect(() => {
+    if (!loading && !user && !isPublic) {
+      navigate({ to: "/login" });
+    }
+  }, [loading, user, isPublic, navigate]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#1F4E79]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-white/20 border-t-white" />
+          <p className="text-sm text-white/60">Loading Tenderbox…</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user && !isPublic) return null;
+
+  return <>{children}</>;
+}
+
 function AppShell() {
   const { isDemoMode } = useDemoMode();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isLanding = pathname === "/landing";
+  const isPublic = PUBLIC_PATHS.includes(pathname);
 
-  if (isLanding) {
+  if (isPublic) {
     return (
       <div className="min-h-screen bg-background">
         <Outlet />
@@ -101,11 +134,15 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <DemoProvider>
-        <ToastProvider>
-          <AppShell />
-        </ToastProvider>
-      </DemoProvider>
+      <AuthProvider>
+        <DemoProvider>
+          <ToastProvider>
+            <AuthGate>
+              <AppShell />
+            </AuthGate>
+          </ToastProvider>
+        </DemoProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

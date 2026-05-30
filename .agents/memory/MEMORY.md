@@ -1,0 +1,1 @@
+- [TanStack Router route tree](tanstack-route-tree.md) — routeTree.gen.ts is static (no Vite plugin); new routes must be manually added to it.

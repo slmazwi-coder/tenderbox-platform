@@ -14,6 +14,7 @@ import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PaymentsRouteImport } from './routes/payments'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LandingRouteImport } from './routes/landing'
 import { Route as EvaluationRouteImport } from './routes/evaluation'
 import { Route as DemoRouteImport } from './routes/demo'
@@ -44,6 +45,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const PaymentsRoute = PaymentsRouteImport.update({
   id: '/payments',
   path: '/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LandingRoute = LandingRouteImport.update({
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
+  '/login': typeof LoginRoute
   '/payments': typeof PaymentsRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
+  '/login': typeof LoginRoute
   '/payments': typeof PaymentsRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
+  '/login': typeof LoginRoute
   '/payments': typeof PaymentsRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/evaluation'
     | '/landing'
+    | '/login'
     | '/payments'
     | '/profile'
     | '/projects'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/evaluation'
     | '/landing'
+    | '/login'
     | '/payments'
     | '/profile'
     | '/projects'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/evaluation'
     | '/landing'
+    | '/login'
     | '/payments'
     | '/profile'
     | '/projects'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   DemoRoute: typeof DemoRoute
   EvaluationRoute: typeof EvaluationRoute
   LandingRoute: typeof LandingRoute
+  LoginRoute: typeof LoginRoute
   PaymentsRoute: typeof PaymentsRoute
   ProfileRoute: typeof ProfileRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -217,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LandingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/evaluation': {
       id: '/evaluation'
       path: '/evaluation'
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoRoute: DemoRoute,
   EvaluationRoute: EvaluationRoute,
   LandingRoute: LandingRoute,
+  LoginRoute: LoginRoute,
   PaymentsRoute: PaymentsRoute,
   ProfileRoute: ProfileRoute,
   ProjectsRoute: ProjectsRoute,
