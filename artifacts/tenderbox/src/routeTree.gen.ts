@@ -33,6 +33,7 @@ import { Route as ClientRouteImport } from './routes/client'
 import { Route as ClientTendersRouteImport } from './routes/client/tenders'
 import { Route as ClientProjectsRouteImport } from './routes/client/projects'
 import { Route as ClientPaymentsRouteImport } from './routes/client/payments'
+import { Route as ClientGate1RouteImport } from './routes/client/gate1'
 import { Route as ClientGate2RouteImport } from './routes/client/gate2'
 import { Route as BidsRouteImport } from './routes/bids'
 import { Route as AuditorRouteImport } from './routes/auditor'
@@ -115,6 +116,9 @@ const ClientProjectsRoute = ClientProjectsRouteImport.update({
 const ClientPaymentsRoute = ClientPaymentsRouteImport.update({
   id: '/client/payments', path: '/client/payments', getParentRoute: () => rootRouteImport,
 } as any)
+const ClientGate1Route = ClientGate1RouteImport.update({
+  id: '/client/gate1', path: '/client/gate1', getParentRoute: () => rootRouteImport,
+} as any)
 const ClientGate2Route = ClientGate2RouteImport.update({
   id: '/client/gate2', path: '/client/gate2', getParentRoute: () => rootRouteImport,
 } as any)
@@ -153,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/auditor/trail': typeof AuditorTrailRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
+  '/client/gate1': typeof ClientGate1Route
   '/client/gate2': typeof ClientGate2Route
   '/client/payments': typeof ClientPaymentsRoute
   '/client/projects': typeof ClientProjectsRoute
@@ -188,6 +193,7 @@ export interface FileRoutesByTo {
   '/auditor/trail': typeof AuditorTrailRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
+  '/client/gate1': typeof ClientGate1Route
   '/client/gate2': typeof ClientGate2Route
   '/client/payments': typeof ClientPaymentsRoute
   '/client/projects': typeof ClientProjectsRoute
@@ -224,6 +230,7 @@ export interface FileRoutesById {
   '/auditor/trail': typeof AuditorTrailRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
+  '/client/gate1': typeof ClientGate1Route
   '/client/gate2': typeof ClientGate2Route
   '/client/payments': typeof ClientPaymentsRoute
   '/client/projects': typeof ClientProjectsRoute
@@ -261,6 +268,7 @@ export interface FileRouteTypes {
     | '/auditor/trail'
     | '/bids'
     | '/client'
+    | '/client/gate1'
     | '/client/gate2'
     | '/client/payments'
     | '/client/projects'
@@ -296,6 +304,7 @@ export interface FileRouteTypes {
     | '/auditor/trail'
     | '/bids'
     | '/client'
+    | '/client/gate1'
     | '/client/gate2'
     | '/client/payments'
     | '/client/projects'
@@ -331,6 +340,7 @@ export interface FileRouteTypes {
     | '/auditor/trail'
     | '/bids'
     | '/client'
+    | '/client/gate1'
     | '/client/gate2'
     | '/client/payments'
     | '/client/projects'
@@ -367,6 +377,7 @@ export interface RootRouteChildren {
   AuditorTrailRoute: typeof AuditorTrailRoute
   BidsRoute: typeof BidsRoute
   ClientRoute: typeof ClientRoute
+  ClientGate1Route: typeof ClientGate1Route
   ClientGate2Route: typeof ClientGate2Route
   ClientPaymentsRoute: typeof ClientPaymentsRoute
   ClientProjectsRoute: typeof ClientProjectsRoute
@@ -419,6 +430,7 @@ declare module '@tanstack/react-router' {
     '/client/tenders': { id: '/client/tenders'; path: '/client/tenders'; fullPath: '/client/tenders'; preLoaderRoute: typeof ClientTendersRouteImport; parentRoute: typeof rootRouteImport }
     '/client/projects': { id: '/client/projects'; path: '/client/projects'; fullPath: '/client/projects'; preLoaderRoute: typeof ClientProjectsRouteImport; parentRoute: typeof rootRouteImport }
     '/client/payments': { id: '/client/payments'; path: '/client/payments'; fullPath: '/client/payments'; preLoaderRoute: typeof ClientPaymentsRouteImport; parentRoute: typeof rootRouteImport }
+    '/client/gate1': { id: '/client/gate1'; path: '/client/gate1'; fullPath: '/client/gate1'; preLoaderRoute: typeof ClientGate1RouteImport; parentRoute: typeof rootRouteImport }
     '/client/gate2': { id: '/client/gate2'; path: '/client/gate2'; fullPath: '/client/gate2'; preLoaderRoute: typeof ClientGate2RouteImport; parentRoute: typeof rootRouteImport }
     '/bids': { id: '/bids'; path: '/bids'; fullPath: '/bids'; preLoaderRoute: typeof BidsRouteImport; parentRoute: typeof rootRouteImport }
     '/auditor': { id: '/auditor'; path: '/auditor'; fullPath: '/auditor'; preLoaderRoute: typeof AuditorRouteImport; parentRoute: typeof rootRouteImport }
@@ -441,6 +453,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuditorTrailRoute,
   BidsRoute,
   ClientRoute,
+  ClientGate1Route,
   ClientGate2Route,
   ClientPaymentsRoute,
   ClientProjectsRoute,
