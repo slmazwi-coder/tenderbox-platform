@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Eye, EyeOff, Loader2, ShieldCheck, CreditCard, Scale, Building2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, ShieldCheck, CreditCard, Scale, Building2, UserCircle, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { getRoleRoute } from "@/lib/auth";
 
@@ -11,6 +11,14 @@ const FEATURES = [
   { icon: Scale, text: "Algorithm-scored evaluation — no manipulation" },
   { icon: CreditCard, text: "Escrow-enforced 30-day statutory payments" },
   { icon: Building2, text: "Full MFMA audit trail on every action" },
+];
+
+const DEMO_ACCOUNTS = [
+  { email: "scm@amathole.gov.za", password: "Demo@1234", role: "Client Entity", entity: "Amathole District Municipality" },
+  { email: "contractor@sizwe.co.za", password: "Demo@1234", role: "Contractor", entity: "Sizwe Construction Pty Ltd" },
+  { email: "pa@konsult.co.za", password: "Demo@1234", role: "Consultant", entity: "Konsult Engineers" },
+  { email: "auditor@agsa.gov.za", password: "Demo@1234", role: "Auditor", entity: "Auditor-General South Africa" },
+  { email: "psc@ward7.gov.za", password: "Demo@1234", role: "PSC Community", entity: "Ward 7 PSC Emalahleni" },
 ];
 
 function LoginPage() {
@@ -39,6 +47,12 @@ function LoginPage() {
       setSubmitting(false);
     }
     // On success, onAuthStateChange fires → profile loads → useEffect redirects
+  };
+
+  const fillCredentials = (demoEmail: string, demoPassword: string) => {
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    setError(null);
   };
 
   return (
@@ -158,6 +172,39 @@ function LoginPage() {
               Create account
             </Link>
           </p>
+
+          {/* Demo Accounts Card */}
+          <div className="mt-8 rounded-lg border-2 border-amber-500/50 bg-amber-50/50 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="h-4 w-4 text-amber-600" />
+              <h3 className="font-semibold text-amber-800 text-sm">Demo Accounts</h3>
+            </div>
+            <p className="text-xs text-amber-700/80 mb-4">
+              For demonstration purposes only. These accounts are pre-configured with test data.
+            </p>
+            <div className="space-y-2">
+              {DEMO_ACCOUNTS.map((account) => (
+                <div
+                  key={account.email}
+                  className="flex items-center justify-between rounded-md bg-white/60 border border-amber-200/50 px-3 py-2"
+                >
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium text-foreground truncate">{account.email}</p>
+                    <p className="text-[10px] text-muted-foreground">
+                      {account.role} · {account.entity}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => fillCredentials(account.email, account.password)}
+                    className="ml-2 shrink-0 rounded-md bg-amber-100 px-2.5 py-1 text-[10px] font-medium text-amber-800 hover:bg-amber-200 transition-colors"
+                  >
+                    Login
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
