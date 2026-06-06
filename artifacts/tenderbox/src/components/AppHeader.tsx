@@ -6,6 +6,11 @@ import { useAuth } from "@/contexts/AuthContext";
 const TITLES: Record<string, string> = {
   "/": "Dashboard",
   "/contractor": "Dashboard",
+  "/contractor/profile": "My Profile",
+  "/contractor/tenders": "Active Tenders",
+  "/contractor/bids": "My Bids",
+  "/contractor/payments": "Payments",
+  "/contractor/projects": "Projects",
   "/client": "Dashboard",
   "/consultant": "Dashboard",
   "/professional": "Dashboard",
@@ -67,11 +72,7 @@ export function AppHeader() {
               : "border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground",
           ].join(" ")}
         >
-          {isDemoMode ? (
-            <MonitorOff className="h-3.5 w-3.5" />
-          ) : (
-            <Monitor className="h-3.5 w-3.5" />
-          )}
+          {isDemoMode ? <MonitorOff className="h-3.5 w-3.5" /> : <Monitor className="h-3.5 w-3.5" />}
           {isDemoMode ? "Exit Demo" : "Demo Mode"}
         </button>
 

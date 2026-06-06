@@ -1,1 +1,2 @@
-- [TanStack Router route tree](tanstack-route-tree.md) — routeTree.gen.ts is static (no Vite plugin); new routes must be manually added to it.
+- [routeTree manual management](routetree-manual.md) — routeTree.gen.ts is static/hand-maintained; flat routes off rootRoute avoids layout-nesting complexity with sub-paths.
+- [Contractor route structure](contractor-routes.md) — /contractor/* are flat children of root (not nested under a layout route); RoleGuard component wraps each page component.

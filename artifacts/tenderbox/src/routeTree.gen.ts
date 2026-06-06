@@ -23,6 +23,11 @@ import { Route as EvaluationRouteImport } from './routes/evaluation'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as ConsultantRouteImport } from './routes/consultant'
 import { Route as ContractorRouteImport } from './routes/contractor'
+import { Route as ContractorTendersRouteImport } from './routes/contractor/tenders'
+import { Route as ContractorProjectsRouteImport } from './routes/contractor/projects'
+import { Route as ContractorProfileRouteImport } from './routes/contractor/profile'
+import { Route as ContractorPaymentsRouteImport } from './routes/contractor/payments'
+import { Route as ContractorBidsRouteImport } from './routes/contractor/bids'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as ClientRouteImport } from './routes/client'
 import { Route as BidsRouteImport } from './routes/bids'
@@ -32,109 +37,82 @@ import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TendersRoute = TendersRouteImport.update({
-  id: '/tenders',
-  path: '/tenders',
-  getParentRoute: () => rootRouteImport,
+  id: '/tenders', path: '/tenders', getParentRoute: () => rootRouteImport,
 } as any)
 const SupplierRoute = SupplierRouteImport.update({
-  id: '/supplier',
-  path: '/supplier',
-  getParentRoute: () => rootRouteImport,
+  id: '/supplier', path: '/supplier', getParentRoute: () => rootRouteImport,
 } as any)
 const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => rootRouteImport,
+  id: '/reports', path: '/reports', getParentRoute: () => rootRouteImport,
 } as any)
 const PscRoute = PscRouteImport.update({
-  id: '/psc',
-  path: '/psc',
-  getParentRoute: () => rootRouteImport,
+  id: '/psc', path: '/psc', getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => rootRouteImport,
+  id: '/projects', path: '/projects', getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
+  id: '/profile', path: '/profile', getParentRoute: () => rootRouteImport,
 } as any)
 const ProfessionalRoute = ProfessionalRouteImport.update({
-  id: '/professional',
-  path: '/professional',
-  getParentRoute: () => rootRouteImport,
+  id: '/professional', path: '/professional', getParentRoute: () => rootRouteImport,
 } as any)
 const PaymentsRoute = PaymentsRouteImport.update({
-  id: '/payments',
-  path: '/payments',
-  getParentRoute: () => rootRouteImport,
+  id: '/payments', path: '/payments', getParentRoute: () => rootRouteImport,
 } as any)
 const OrgRoute = OrgRouteImport.update({
-  id: '/org',
-  path: '/org',
-  getParentRoute: () => rootRouteImport,
+  id: '/org', path: '/org', getParentRoute: () => rootRouteImport,
 } as any)
 const LandingRoute = LandingRouteImport.update({
-  id: '/landing',
-  path: '/landing',
-  getParentRoute: () => rootRouteImport,
+  id: '/landing', path: '/landing', getParentRoute: () => rootRouteImport,
 } as any)
 const EvaluationRoute = EvaluationRouteImport.update({
-  id: '/evaluation',
-  path: '/evaluation',
-  getParentRoute: () => rootRouteImport,
+  id: '/evaluation', path: '/evaluation', getParentRoute: () => rootRouteImport,
 } as any)
 const DemoRoute = DemoRouteImport.update({
-  id: '/demo',
-  path: '/demo',
-  getParentRoute: () => rootRouteImport,
+  id: '/demo', path: '/demo', getParentRoute: () => rootRouteImport,
 } as any)
 const ConsultantRoute = ConsultantRouteImport.update({
-  id: '/consultant',
-  path: '/consultant',
-  getParentRoute: () => rootRouteImport,
+  id: '/consultant', path: '/consultant', getParentRoute: () => rootRouteImport,
 } as any)
 const ContractorRoute = ContractorRouteImport.update({
-  id: '/contractor',
-  path: '/contractor',
-  getParentRoute: () => rootRouteImport,
+  id: '/contractor', path: '/contractor', getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorTendersRoute = ContractorTendersRouteImport.update({
+  id: '/contractor/tenders', path: '/contractor/tenders', getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorProjectsRoute = ContractorProjectsRouteImport.update({
+  id: '/contractor/projects', path: '/contractor/projects', getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorProfileRoute = ContractorProfileRouteImport.update({
+  id: '/contractor/profile', path: '/contractor/profile', getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorPaymentsRoute = ContractorPaymentsRouteImport.update({
+  id: '/contractor/payments', path: '/contractor/payments', getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorBidsRoute = ContractorBidsRouteImport.update({
+  id: '/contractor/bids', path: '/contractor/bids', getParentRoute: () => rootRouteImport,
 } as any)
 const ComplianceRoute = ComplianceRouteImport.update({
-  id: '/compliance',
-  path: '/compliance',
-  getParentRoute: () => rootRouteImport,
+  id: '/compliance', path: '/compliance', getParentRoute: () => rootRouteImport,
 } as any)
 const ClientRoute = ClientRouteImport.update({
-  id: '/client',
-  path: '/client',
-  getParentRoute: () => rootRouteImport,
+  id: '/client', path: '/client', getParentRoute: () => rootRouteImport,
 } as any)
 const BidsRoute = BidsRouteImport.update({
-  id: '/bids',
-  path: '/bids',
-  getParentRoute: () => rootRouteImport,
+  id: '/bids', path: '/bids', getParentRoute: () => rootRouteImport,
 } as any)
 const AuditorRoute = AuditorRouteImport.update({
-  id: '/auditor',
-  path: '/auditor',
-  getParentRoute: () => rootRouteImport,
+  id: '/auditor', path: '/auditor', getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/auth/signup',
-  path: '/auth/signup',
-  getParentRoute: () => rootRouteImport,
+  id: '/auth/signup', path: '/auth/signup', getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/auth/login',
-  path: '/auth/login',
-  getParentRoute: () => rootRouteImport,
+  id: '/auth/login', path: '/auth/login', getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
+  id: '/', path: '/', getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -147,6 +125,11 @@ export interface FileRoutesByFullPath {
   '/compliance': typeof ComplianceRoute
   '/consultant': typeof ConsultantRoute
   '/contractor': typeof ContractorRoute
+  '/contractor/bids': typeof ContractorBidsRoute
+  '/contractor/payments': typeof ContractorPaymentsRoute
+  '/contractor/profile': typeof ContractorProfileRoute
+  '/contractor/projects': typeof ContractorProjectsRoute
+  '/contractor/tenders': typeof ContractorTendersRoute
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
@@ -170,6 +153,11 @@ export interface FileRoutesByTo {
   '/compliance': typeof ComplianceRoute
   '/consultant': typeof ConsultantRoute
   '/contractor': typeof ContractorRoute
+  '/contractor/bids': typeof ContractorBidsRoute
+  '/contractor/payments': typeof ContractorPaymentsRoute
+  '/contractor/profile': typeof ContractorProfileRoute
+  '/contractor/projects': typeof ContractorProjectsRoute
+  '/contractor/tenders': typeof ContractorTendersRoute
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
@@ -194,6 +182,11 @@ export interface FileRoutesById {
   '/compliance': typeof ComplianceRoute
   '/consultant': typeof ConsultantRoute
   '/contractor': typeof ContractorRoute
+  '/contractor/bids': typeof ContractorBidsRoute
+  '/contractor/payments': typeof ContractorPaymentsRoute
+  '/contractor/profile': typeof ContractorProfileRoute
+  '/contractor/projects': typeof ContractorProjectsRoute
+  '/contractor/tenders': typeof ContractorTendersRoute
   '/demo': typeof DemoRoute
   '/evaluation': typeof EvaluationRoute
   '/landing': typeof LandingRoute
@@ -219,6 +212,11 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/consultant'
     | '/contractor'
+    | '/contractor/bids'
+    | '/contractor/payments'
+    | '/contractor/profile'
+    | '/contractor/projects'
+    | '/contractor/tenders'
     | '/demo'
     | '/evaluation'
     | '/landing'
@@ -242,6 +240,11 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/consultant'
     | '/contractor'
+    | '/contractor/bids'
+    | '/contractor/payments'
+    | '/contractor/profile'
+    | '/contractor/projects'
+    | '/contractor/tenders'
     | '/demo'
     | '/evaluation'
     | '/landing'
@@ -265,6 +268,11 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/consultant'
     | '/contractor'
+    | '/contractor/bids'
+    | '/contractor/payments'
+    | '/contractor/profile'
+    | '/contractor/projects'
+    | '/contractor/tenders'
     | '/demo'
     | '/evaluation'
     | '/landing'
@@ -289,6 +297,11 @@ export interface RootRouteChildren {
   ComplianceRoute: typeof ComplianceRoute
   ConsultantRoute: typeof ConsultantRoute
   ContractorRoute: typeof ContractorRoute
+  ContractorBidsRoute: typeof ContractorBidsRoute
+  ContractorPaymentsRoute: typeof ContractorPaymentsRoute
+  ContractorProfileRoute: typeof ContractorProfileRoute
+  ContractorProjectsRoute: typeof ContractorProjectsRoute
+  ContractorTendersRoute: typeof ContractorTendersRoute
   DemoRoute: typeof DemoRoute
   EvaluationRoute: typeof EvaluationRoute
   LandingRoute: typeof LandingRoute
@@ -305,178 +318,62 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tenders': {
-      id: '/tenders'
-      path: '/tenders'
-      fullPath: '/tenders'
-      preLoaderRoute: typeof TendersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/supplier': {
-      id: '/supplier'
-      path: '/supplier'
-      fullPath: '/supplier'
-      preLoaderRoute: typeof SupplierRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/psc': {
-      id: '/psc'
-      path: '/psc'
-      fullPath: '/psc'
-      preLoaderRoute: typeof PscRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects': {
-      id: '/projects'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/professional': {
-      id: '/professional'
-      path: '/professional'
-      fullPath: '/professional'
-      preLoaderRoute: typeof ProfessionalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/payments': {
-      id: '/payments'
-      path: '/payments'
-      fullPath: '/payments'
-      preLoaderRoute: typeof PaymentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/org': {
-      id: '/org'
-      path: '/org'
-      fullPath: '/org'
-      preLoaderRoute: typeof OrgRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/landing': {
-      id: '/landing'
-      path: '/landing'
-      fullPath: '/landing'
-      preLoaderRoute: typeof LandingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/evaluation': {
-      id: '/evaluation'
-      path: '/evaluation'
-      fullPath: '/evaluation'
-      preLoaderRoute: typeof EvaluationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo': {
-      id: '/demo'
-      path: '/demo'
-      fullPath: '/demo'
-      preLoaderRoute: typeof DemoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/consultant': {
-      id: '/consultant'
-      path: '/consultant'
-      fullPath: '/consultant'
-      preLoaderRoute: typeof ConsultantRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contractor': {
-      id: '/contractor'
-      path: '/contractor'
-      fullPath: '/contractor'
-      preLoaderRoute: typeof ContractorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compliance': {
-      id: '/compliance'
-      path: '/compliance'
-      fullPath: '/compliance'
-      preLoaderRoute: typeof ComplianceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/client': {
-      id: '/client'
-      path: '/client'
-      fullPath: '/client'
-      preLoaderRoute: typeof ClientRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bids': {
-      id: '/bids'
-      path: '/bids'
-      fullPath: '/bids'
-      preLoaderRoute: typeof BidsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auditor': {
-      id: '/auditor'
-      path: '/auditor'
-      fullPath: '/auditor'
-      preLoaderRoute: typeof AuditorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/signup': {
-      id: '/auth/signup'
-      path: '/auth/signup'
-      fullPath: '/auth/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/login': {
-      id: '/auth/login'
-      path: '/auth/login'
-      fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    '/tenders': { id: '/tenders'; path: '/tenders'; fullPath: '/tenders'; preLoaderRoute: typeof TendersRouteImport; parentRoute: typeof rootRouteImport }
+    '/supplier': { id: '/supplier'; path: '/supplier'; fullPath: '/supplier'; preLoaderRoute: typeof SupplierRouteImport; parentRoute: typeof rootRouteImport }
+    '/reports': { id: '/reports'; path: '/reports'; fullPath: '/reports'; preLoaderRoute: typeof ReportsRouteImport; parentRoute: typeof rootRouteImport }
+    '/psc': { id: '/psc'; path: '/psc'; fullPath: '/psc'; preLoaderRoute: typeof PscRouteImport; parentRoute: typeof rootRouteImport }
+    '/projects': { id: '/projects'; path: '/projects'; fullPath: '/projects'; preLoaderRoute: typeof ProjectsRouteImport; parentRoute: typeof rootRouteImport }
+    '/profile': { id: '/profile'; path: '/profile'; fullPath: '/profile'; preLoaderRoute: typeof ProfileRouteImport; parentRoute: typeof rootRouteImport }
+    '/professional': { id: '/professional'; path: '/professional'; fullPath: '/professional'; preLoaderRoute: typeof ProfessionalRouteImport; parentRoute: typeof rootRouteImport }
+    '/payments': { id: '/payments'; path: '/payments'; fullPath: '/payments'; preLoaderRoute: typeof PaymentsRouteImport; parentRoute: typeof rootRouteImport }
+    '/org': { id: '/org'; path: '/org'; fullPath: '/org'; preLoaderRoute: typeof OrgRouteImport; parentRoute: typeof rootRouteImport }
+    '/landing': { id: '/landing'; path: '/landing'; fullPath: '/landing'; preLoaderRoute: typeof LandingRouteImport; parentRoute: typeof rootRouteImport }
+    '/evaluation': { id: '/evaluation'; path: '/evaluation'; fullPath: '/evaluation'; preLoaderRoute: typeof EvaluationRouteImport; parentRoute: typeof rootRouteImport }
+    '/demo': { id: '/demo'; path: '/demo'; fullPath: '/demo'; preLoaderRoute: typeof DemoRouteImport; parentRoute: typeof rootRouteImport }
+    '/consultant': { id: '/consultant'; path: '/consultant'; fullPath: '/consultant'; preLoaderRoute: typeof ConsultantRouteImport; parentRoute: typeof rootRouteImport }
+    '/contractor': { id: '/contractor'; path: '/contractor'; fullPath: '/contractor'; preLoaderRoute: typeof ContractorRouteImport; parentRoute: typeof rootRouteImport }
+    '/contractor/tenders': { id: '/contractor/tenders'; path: '/contractor/tenders'; fullPath: '/contractor/tenders'; preLoaderRoute: typeof ContractorTendersRouteImport; parentRoute: typeof rootRouteImport }
+    '/contractor/projects': { id: '/contractor/projects'; path: '/contractor/projects'; fullPath: '/contractor/projects'; preLoaderRoute: typeof ContractorProjectsRouteImport; parentRoute: typeof rootRouteImport }
+    '/contractor/profile': { id: '/contractor/profile'; path: '/contractor/profile'; fullPath: '/contractor/profile'; preLoaderRoute: typeof ContractorProfileRouteImport; parentRoute: typeof rootRouteImport }
+    '/contractor/payments': { id: '/contractor/payments'; path: '/contractor/payments'; fullPath: '/contractor/payments'; preLoaderRoute: typeof ContractorPaymentsRouteImport; parentRoute: typeof rootRouteImport }
+    '/contractor/bids': { id: '/contractor/bids'; path: '/contractor/bids'; fullPath: '/contractor/bids'; preLoaderRoute: typeof ContractorBidsRouteImport; parentRoute: typeof rootRouteImport }
+    '/compliance': { id: '/compliance'; path: '/compliance'; fullPath: '/compliance'; preLoaderRoute: typeof ComplianceRouteImport; parentRoute: typeof rootRouteImport }
+    '/client': { id: '/client'; path: '/client'; fullPath: '/client'; preLoaderRoute: typeof ClientRouteImport; parentRoute: typeof rootRouteImport }
+    '/bids': { id: '/bids'; path: '/bids'; fullPath: '/bids'; preLoaderRoute: typeof BidsRouteImport; parentRoute: typeof rootRouteImport }
+    '/auditor': { id: '/auditor'; path: '/auditor'; fullPath: '/auditor'; preLoaderRoute: typeof AuditorRouteImport; parentRoute: typeof rootRouteImport }
+    '/auth/signup': { id: '/auth/signup'; path: '/auth/signup'; fullPath: '/auth/signup'; preLoaderRoute: typeof AuthSignupRouteImport; parentRoute: typeof rootRouteImport }
+    '/auth/login': { id: '/auth/login'; path: '/auth/login'; fullPath: '/auth/login'; preLoaderRoute: typeof AuthLoginRouteImport; parentRoute: typeof rootRouteImport }
+    '/': { id: '/'; path: '/'; fullPath: '/'; preLoaderRoute: typeof IndexRouteImport; parentRoute: typeof rootRouteImport }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthSignupRoute: AuthSignupRoute,
-  AuditorRoute: AuditorRoute,
-  BidsRoute: BidsRoute,
-  ClientRoute: ClientRoute,
-  ComplianceRoute: ComplianceRoute,
-  ConsultantRoute: ConsultantRoute,
-  ContractorRoute: ContractorRoute,
-  DemoRoute: DemoRoute,
-  EvaluationRoute: EvaluationRoute,
-  LandingRoute: LandingRoute,
-  OrgRoute: OrgRoute,
-  PaymentsRoute: PaymentsRoute,
-  ProfessionalRoute: ProfessionalRoute,
-  ProfileRoute: ProfileRoute,
-  ProjectsRoute: ProjectsRoute,
-  PscRoute: PscRoute,
-  ReportsRoute: ReportsRoute,
-  SupplierRoute: SupplierRoute,
-  TendersRoute: TendersRoute,
+  IndexRoute,
+  AuthLoginRoute,
+  AuthSignupRoute,
+  AuditorRoute,
+  BidsRoute,
+  ClientRoute,
+  ComplianceRoute,
+  ConsultantRoute,
+  ContractorRoute,
+  ContractorBidsRoute,
+  ContractorPaymentsRoute,
+  ContractorProfileRoute,
+  ContractorProjectsRoute,
+  ContractorTendersRoute,
+  DemoRoute,
+  EvaluationRoute,
+  LandingRoute,
+  OrgRoute,
+  PaymentsRoute,
+  ProfessionalRoute,
+  ProfileRoute,
+  ProjectsRoute,
+  PscRoute,
+  ReportsRoute,
+  SupplierRoute,
+  TendersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
