@@ -39,12 +39,11 @@ const CONSULTANT_NAV: NavItem[] = [
 ];
 
 const AUDITOR_NAV: NavItem[] = [
-  { title: "Dashboard",                  url: "/auditor",  icon: Home },
-  { title: "Audit Trail",                url: "/reports",  icon: ClipboardList },
-  { title: "Red Flags",                  url: "/reports",  icon: AlertTriangle },
-  { title: "Procurement Irregularities", url: "/reports",  icon: ShieldCheck },
-  { title: "Payment Reports",            url: "/payments", icon: CreditCard },
-  { title: "All Projects",               url: "/projects", icon: Briefcase },
+  { title: "Dashboard",        url: "/auditor",                 icon: Home },
+  { title: "Audit Trail",      url: "/auditor/trail",           icon: ClipboardList },
+  { title: "Red Flags",        url: "/auditor/flags",           icon: AlertTriangle },
+  { title: "Irregularities",   url: "/auditor/irregularities",  icon: ShieldCheck },
+  { title: "All Projects",     url: "/projects",                icon: Briefcase },
 ];
 
 const DEFAULT_NAV = (dashUrl: string): NavItem[] => [

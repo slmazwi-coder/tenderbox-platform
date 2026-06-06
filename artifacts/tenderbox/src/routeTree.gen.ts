@@ -36,6 +36,9 @@ import { Route as ClientPaymentsRouteImport } from './routes/client/payments'
 import { Route as ClientGate2RouteImport } from './routes/client/gate2'
 import { Route as BidsRouteImport } from './routes/bids'
 import { Route as AuditorRouteImport } from './routes/auditor'
+import { Route as AuditorTrailRouteImport } from './routes/auditor/trail'
+import { Route as AuditorFlagsRouteImport } from './routes/auditor/flags'
+import { Route as AuditorIrregularitiesRouteImport } from './routes/auditor/irregularities'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as IndexRouteImport } from './routes/index'
@@ -121,6 +124,15 @@ const BidsRoute = BidsRouteImport.update({
 const AuditorRoute = AuditorRouteImport.update({
   id: '/auditor', path: '/auditor', getParentRoute: () => rootRouteImport,
 } as any)
+const AuditorTrailRoute = AuditorTrailRouteImport.update({
+  id: '/auditor/trail', path: '/auditor/trail', getParentRoute: () => rootRouteImport,
+} as any)
+const AuditorFlagsRoute = AuditorFlagsRouteImport.update({
+  id: '/auditor/flags', path: '/auditor/flags', getParentRoute: () => rootRouteImport,
+} as any)
+const AuditorIrregularitiesRoute = AuditorIrregularitiesRouteImport.update({
+  id: '/auditor/irregularities', path: '/auditor/irregularities', getParentRoute: () => rootRouteImport,
+} as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/auth/signup', path: '/auth/signup', getParentRoute: () => rootRouteImport,
 } as any)
@@ -136,6 +148,9 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/auditor': typeof AuditorRoute
+  '/auditor/flags': typeof AuditorFlagsRoute
+  '/auditor/irregularities': typeof AuditorIrregularitiesRoute
+  '/auditor/trail': typeof AuditorTrailRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
   '/client/gate2': typeof ClientGate2Route
@@ -168,6 +183,9 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/auditor': typeof AuditorRoute
+  '/auditor/flags': typeof AuditorFlagsRoute
+  '/auditor/irregularities': typeof AuditorIrregularitiesRoute
+  '/auditor/trail': typeof AuditorTrailRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
   '/client/gate2': typeof ClientGate2Route
@@ -201,6 +219,9 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/auditor': typeof AuditorRoute
+  '/auditor/flags': typeof AuditorFlagsRoute
+  '/auditor/irregularities': typeof AuditorIrregularitiesRoute
+  '/auditor/trail': typeof AuditorTrailRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
   '/client/gate2': typeof ClientGate2Route
@@ -235,6 +256,9 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/signup'
     | '/auditor'
+    | '/auditor/flags'
+    | '/auditor/irregularities'
+    | '/auditor/trail'
     | '/bids'
     | '/client'
     | '/client/gate2'
@@ -267,6 +291,9 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/signup'
     | '/auditor'
+    | '/auditor/flags'
+    | '/auditor/irregularities'
+    | '/auditor/trail'
     | '/bids'
     | '/client'
     | '/client/gate2'
@@ -299,6 +326,9 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/signup'
     | '/auditor'
+    | '/auditor/flags'
+    | '/auditor/irregularities'
+    | '/auditor/trail'
     | '/bids'
     | '/client'
     | '/client/gate2'
@@ -332,6 +362,9 @@ export interface RootRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
   AuditorRoute: typeof AuditorRoute
+  AuditorFlagsRoute: typeof AuditorFlagsRoute
+  AuditorIrregularitiesRoute: typeof AuditorIrregularitiesRoute
+  AuditorTrailRoute: typeof AuditorTrailRoute
   BidsRoute: typeof BidsRoute
   ClientRoute: typeof ClientRoute
   ClientGate2Route: typeof ClientGate2Route
@@ -389,6 +422,9 @@ declare module '@tanstack/react-router' {
     '/client/gate2': { id: '/client/gate2'; path: '/client/gate2'; fullPath: '/client/gate2'; preLoaderRoute: typeof ClientGate2RouteImport; parentRoute: typeof rootRouteImport }
     '/bids': { id: '/bids'; path: '/bids'; fullPath: '/bids'; preLoaderRoute: typeof BidsRouteImport; parentRoute: typeof rootRouteImport }
     '/auditor': { id: '/auditor'; path: '/auditor'; fullPath: '/auditor'; preLoaderRoute: typeof AuditorRouteImport; parentRoute: typeof rootRouteImport }
+    '/auditor/trail': { id: '/auditor/trail'; path: '/auditor/trail'; fullPath: '/auditor/trail'; preLoaderRoute: typeof AuditorTrailRouteImport; parentRoute: typeof rootRouteImport }
+    '/auditor/flags': { id: '/auditor/flags'; path: '/auditor/flags'; fullPath: '/auditor/flags'; preLoaderRoute: typeof AuditorFlagsRouteImport; parentRoute: typeof rootRouteImport }
+    '/auditor/irregularities': { id: '/auditor/irregularities'; path: '/auditor/irregularities'; fullPath: '/auditor/irregularities'; preLoaderRoute: typeof AuditorIrregularitiesRouteImport; parentRoute: typeof rootRouteImport }
     '/auth/signup': { id: '/auth/signup'; path: '/auth/signup'; fullPath: '/auth/signup'; preLoaderRoute: typeof AuthSignupRouteImport; parentRoute: typeof rootRouteImport }
     '/auth/login': { id: '/auth/login'; path: '/auth/login'; fullPath: '/auth/login'; preLoaderRoute: typeof AuthLoginRouteImport; parentRoute: typeof rootRouteImport }
     '/': { id: '/'; path: '/'; fullPath: '/'; preLoaderRoute: typeof IndexRouteImport; parentRoute: typeof rootRouteImport }
@@ -400,6 +436,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRoute,
   AuthSignupRoute,
   AuditorRoute,
+  AuditorFlagsRoute,
+  AuditorIrregularitiesRoute,
+  AuditorTrailRoute,
   BidsRoute,
   ClientRoute,
   ClientGate2Route,
