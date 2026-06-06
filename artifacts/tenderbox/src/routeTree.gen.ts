@@ -30,6 +30,10 @@ import { Route as ContractorPaymentsRouteImport } from './routes/contractor/paym
 import { Route as ContractorBidsRouteImport } from './routes/contractor/bids'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as ClientRouteImport } from './routes/client'
+import { Route as ClientTendersRouteImport } from './routes/client/tenders'
+import { Route as ClientProjectsRouteImport } from './routes/client/projects'
+import { Route as ClientPaymentsRouteImport } from './routes/client/payments'
+import { Route as ClientGate2RouteImport } from './routes/client/gate2'
 import { Route as BidsRouteImport } from './routes/bids'
 import { Route as AuditorRouteImport } from './routes/auditor'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
@@ -99,6 +103,18 @@ const ComplianceRoute = ComplianceRouteImport.update({
 const ClientRoute = ClientRouteImport.update({
   id: '/client', path: '/client', getParentRoute: () => rootRouteImport,
 } as any)
+const ClientTendersRoute = ClientTendersRouteImport.update({
+  id: '/client/tenders', path: '/client/tenders', getParentRoute: () => rootRouteImport,
+} as any)
+const ClientProjectsRoute = ClientProjectsRouteImport.update({
+  id: '/client/projects', path: '/client/projects', getParentRoute: () => rootRouteImport,
+} as any)
+const ClientPaymentsRoute = ClientPaymentsRouteImport.update({
+  id: '/client/payments', path: '/client/payments', getParentRoute: () => rootRouteImport,
+} as any)
+const ClientGate2Route = ClientGate2RouteImport.update({
+  id: '/client/gate2', path: '/client/gate2', getParentRoute: () => rootRouteImport,
+} as any)
 const BidsRoute = BidsRouteImport.update({
   id: '/bids', path: '/bids', getParentRoute: () => rootRouteImport,
 } as any)
@@ -122,6 +138,10 @@ export interface FileRoutesByFullPath {
   '/auditor': typeof AuditorRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
+  '/client/gate2': typeof ClientGate2Route
+  '/client/payments': typeof ClientPaymentsRoute
+  '/client/projects': typeof ClientProjectsRoute
+  '/client/tenders': typeof ClientTendersRoute
   '/compliance': typeof ComplianceRoute
   '/consultant': typeof ConsultantRoute
   '/contractor': typeof ContractorRoute
@@ -150,6 +170,10 @@ export interface FileRoutesByTo {
   '/auditor': typeof AuditorRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
+  '/client/gate2': typeof ClientGate2Route
+  '/client/payments': typeof ClientPaymentsRoute
+  '/client/projects': typeof ClientProjectsRoute
+  '/client/tenders': typeof ClientTendersRoute
   '/compliance': typeof ComplianceRoute
   '/consultant': typeof ConsultantRoute
   '/contractor': typeof ContractorRoute
@@ -179,6 +203,10 @@ export interface FileRoutesById {
   '/auditor': typeof AuditorRoute
   '/bids': typeof BidsRoute
   '/client': typeof ClientRoute
+  '/client/gate2': typeof ClientGate2Route
+  '/client/payments': typeof ClientPaymentsRoute
+  '/client/projects': typeof ClientProjectsRoute
+  '/client/tenders': typeof ClientTendersRoute
   '/compliance': typeof ComplianceRoute
   '/consultant': typeof ConsultantRoute
   '/contractor': typeof ContractorRoute
@@ -209,6 +237,10 @@ export interface FileRouteTypes {
     | '/auditor'
     | '/bids'
     | '/client'
+    | '/client/gate2'
+    | '/client/payments'
+    | '/client/projects'
+    | '/client/tenders'
     | '/compliance'
     | '/consultant'
     | '/contractor'
@@ -237,6 +269,10 @@ export interface FileRouteTypes {
     | '/auditor'
     | '/bids'
     | '/client'
+    | '/client/gate2'
+    | '/client/payments'
+    | '/client/projects'
+    | '/client/tenders'
     | '/compliance'
     | '/consultant'
     | '/contractor'
@@ -265,6 +301,10 @@ export interface FileRouteTypes {
     | '/auditor'
     | '/bids'
     | '/client'
+    | '/client/gate2'
+    | '/client/payments'
+    | '/client/projects'
+    | '/client/tenders'
     | '/compliance'
     | '/consultant'
     | '/contractor'
@@ -294,6 +334,10 @@ export interface RootRouteChildren {
   AuditorRoute: typeof AuditorRoute
   BidsRoute: typeof BidsRoute
   ClientRoute: typeof ClientRoute
+  ClientGate2Route: typeof ClientGate2Route
+  ClientPaymentsRoute: typeof ClientPaymentsRoute
+  ClientProjectsRoute: typeof ClientProjectsRoute
+  ClientTendersRoute: typeof ClientTendersRoute
   ComplianceRoute: typeof ComplianceRoute
   ConsultantRoute: typeof ConsultantRoute
   ContractorRoute: typeof ContractorRoute
@@ -339,6 +383,10 @@ declare module '@tanstack/react-router' {
     '/contractor/bids': { id: '/contractor/bids'; path: '/contractor/bids'; fullPath: '/contractor/bids'; preLoaderRoute: typeof ContractorBidsRouteImport; parentRoute: typeof rootRouteImport }
     '/compliance': { id: '/compliance'; path: '/compliance'; fullPath: '/compliance'; preLoaderRoute: typeof ComplianceRouteImport; parentRoute: typeof rootRouteImport }
     '/client': { id: '/client'; path: '/client'; fullPath: '/client'; preLoaderRoute: typeof ClientRouteImport; parentRoute: typeof rootRouteImport }
+    '/client/tenders': { id: '/client/tenders'; path: '/client/tenders'; fullPath: '/client/tenders'; preLoaderRoute: typeof ClientTendersRouteImport; parentRoute: typeof rootRouteImport }
+    '/client/projects': { id: '/client/projects'; path: '/client/projects'; fullPath: '/client/projects'; preLoaderRoute: typeof ClientProjectsRouteImport; parentRoute: typeof rootRouteImport }
+    '/client/payments': { id: '/client/payments'; path: '/client/payments'; fullPath: '/client/payments'; preLoaderRoute: typeof ClientPaymentsRouteImport; parentRoute: typeof rootRouteImport }
+    '/client/gate2': { id: '/client/gate2'; path: '/client/gate2'; fullPath: '/client/gate2'; preLoaderRoute: typeof ClientGate2RouteImport; parentRoute: typeof rootRouteImport }
     '/bids': { id: '/bids'; path: '/bids'; fullPath: '/bids'; preLoaderRoute: typeof BidsRouteImport; parentRoute: typeof rootRouteImport }
     '/auditor': { id: '/auditor'; path: '/auditor'; fullPath: '/auditor'; preLoaderRoute: typeof AuditorRouteImport; parentRoute: typeof rootRouteImport }
     '/auth/signup': { id: '/auth/signup'; path: '/auth/signup'; fullPath: '/auth/signup'; preLoaderRoute: typeof AuthSignupRouteImport; parentRoute: typeof rootRouteImport }
@@ -354,6 +402,10 @@ const rootRouteChildren: RootRouteChildren = {
   AuditorRoute,
   BidsRoute,
   ClientRoute,
+  ClientGate2Route,
+  ClientPaymentsRoute,
+  ClientProjectsRoute,
+  ClientTendersRoute,
   ComplianceRoute,
   ConsultantRoute,
   ContractorRoute,

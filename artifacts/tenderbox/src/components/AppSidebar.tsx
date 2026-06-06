@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Home, User, ShieldCheck, FileText, Send, CreditCard, Briefcase,
-  BarChart3, Scale, Presentation, Building2, ClipboardList,
+  BarChart3, Scale, Presentation, ClipboardList,
   GraduationCap, BookOpen, AlertTriangle, Search, type LucideIcon,
 } from "lucide-react";
 import { useProfile } from "@/lib/auth";
@@ -9,100 +9,91 @@ import { useProfile } from "@/lib/auth";
 interface NavItem { title: string; url: string; icon: LucideIcon }
 
 const CONTRACTOR_NAV: NavItem[] = [
-  { title: "Dashboard", url: "/contractor", icon: Home },
-  { title: "My Profile", url: "/contractor/profile", icon: User },
-  { title: "Compliance", url: "/compliance", icon: ShieldCheck },
-  { title: "Active Tenders", url: "/contractor/tenders", icon: FileText },
-  { title: "My Bids", url: "/contractor/bids", icon: Send },
-  { title: "Payments", url: "/contractor/payments", icon: CreditCard },
-  { title: "Projects", url: "/contractor/projects", icon: Briefcase },
-  { title: "Reports", url: "/reports", icon: BarChart3 },
+  { title: "Dashboard",     url: "/contractor",          icon: Home },
+  { title: "My Profile",    url: "/contractor/profile",  icon: User },
+  { title: "Compliance",    url: "/compliance",          icon: ShieldCheck },
+  { title: "Active Tenders",url: "/contractor/tenders",  icon: FileText },
+  { title: "My Bids",       url: "/contractor/bids",     icon: Send },
+  { title: "Payments",      url: "/contractor/payments", icon: CreditCard },
+  { title: "Projects",      url: "/contractor/projects", icon: Briefcase },
+  { title: "Reports",       url: "/reports",             icon: BarChart3 },
 ];
 
 const CLIENT_NAV: NavItem[] = [
-  { title: "Dashboard", url: "/client", icon: Home },
-  { title: "Publish Tender", url: "/tenders", icon: FileText },
-  { title: "Gate 1", url: "/tenders", icon: ClipboardList },
-  { title: "Gate 2 Evaluation", url: "/evaluation", icon: Scale },
-  { title: "Gate 3 Pre-construction", url: "/projects", icon: Building2 },
-  { title: "Payments", url: "/payments", icon: CreditCard },
-  { title: "Projects", url: "/projects", icon: Briefcase },
-  { title: "Reports", url: "/reports", icon: BarChart3 },
+  { title: "Dashboard",         url: "/client",          icon: Home },
+  { title: "Tenders",           url: "/client/tenders",  icon: FileText },
+  { title: "Gate 2 Adjudication",url: "/client/gate2",   icon: Scale },
+  { title: "Payments",          url: "/client/payments", icon: CreditCard },
+  { title: "Projects",          url: "/client/projects", icon: Briefcase },
+  { title: "Reports",           url: "/reports",         icon: BarChart3 },
 ];
 
 const CONSULTANT_NAV: NavItem[] = [
-  { title: "Dashboard", url: "/consultant", icon: Home },
-  { title: "My Appointments", url: "/tenders", icon: Search },
-  { title: "Projects", url: "/projects", icon: Briefcase },
-  { title: "Certificates", url: "/compliance", icon: GraduationCap },
-  { title: "Site Diary", url: "/projects", icon: BookOpen },
-  { title: "Payments", url: "/payments", icon: CreditCard },
-  { title: "Reports", url: "/reports", icon: BarChart3 },
+  { title: "Dashboard",       url: "/consultant", icon: Home },
+  { title: "My Appointments", url: "/tenders",    icon: Search },
+  { title: "Projects",        url: "/projects",   icon: Briefcase },
+  { title: "Certificates",    url: "/compliance", icon: GraduationCap },
+  { title: "Site Diary",      url: "/projects",   icon: BookOpen },
+  { title: "Payments",        url: "/payments",   icon: CreditCard },
+  { title: "Reports",         url: "/reports",    icon: BarChart3 },
 ];
 
 const AUDITOR_NAV: NavItem[] = [
-  { title: "Dashboard", url: "/auditor", icon: Home },
-  { title: "Audit Trail", url: "/reports", icon: ClipboardList },
-  { title: "Red Flags", url: "/reports", icon: AlertTriangle },
-  { title: "Procurement Irregularities", url: "/reports", icon: ShieldCheck },
-  { title: "Payment Reports", url: "/payments", icon: CreditCard },
-  { title: "All Projects", url: "/projects", icon: Briefcase },
+  { title: "Dashboard",                  url: "/auditor",  icon: Home },
+  { title: "Audit Trail",                url: "/reports",  icon: ClipboardList },
+  { title: "Red Flags",                  url: "/reports",  icon: AlertTriangle },
+  { title: "Procurement Irregularities", url: "/reports",  icon: ShieldCheck },
+  { title: "Payment Reports",            url: "/payments", icon: CreditCard },
+  { title: "All Projects",               url: "/projects", icon: Briefcase },
 ];
 
 const DEFAULT_NAV = (dashUrl: string): NavItem[] => [
-  { title: "Dashboard", url: dashUrl, icon: Home },
-  { title: "Projects", url: "/projects", icon: Briefcase },
-  { title: "Reports", url: "/reports", icon: BarChart3 },
+  { title: "Dashboard", url: dashUrl,    icon: Home },
+  { title: "Projects",  url: "/projects",icon: Briefcase },
+  { title: "Reports",   url: "/reports", icon: BarChart3 },
 ];
 
 const ROLE_PORTALS: Record<string, string> = {
-  contractor: "Contractor Portal",
-  employee: "Contractor Portal",
+  contractor:    "Contractor Portal",
+  employee:      "Contractor Portal",
   client_entity: "Client Portal",
-  consultant: "Consultant Portal",
-  professional: "Professional Portal",
+  consultant:    "Consultant Portal",
+  professional:  "Professional Portal",
   psc_community: "PSC Portal",
-  integrated_org: "Organisation Portal",
-  supplier: "Supplier Portal",
-  auditor: "Auditor Portal",
+  integrated_org:"Organisation Portal",
+  supplier:      "Supplier Portal",
+  auditor:       "Auditor Portal",
 };
 
 const ROLE_DASHBOARDS: Record<string, string> = {
-  contractor: "/contractor",
-  employee: "/contractor",
+  contractor:    "/contractor",
+  employee:      "/contractor",
   client_entity: "/client",
-  consultant: "/consultant",
-  professional: "/professional",
+  consultant:    "/consultant",
+  professional:  "/professional",
   psc_community: "/psc",
-  integrated_org: "/org",
-  supplier: "/supplier",
-  auditor: "/auditor",
+  integrated_org:"/org",
+  supplier:      "/supplier",
+  auditor:       "/auditor",
 };
 
 function getNavItems(role: string | undefined | null): NavItem[] {
   switch (role) {
     case "contractor":
-    case "employee":
-      return CONTRACTOR_NAV;
-    case "client_entity":
-      return CLIENT_NAV;
-    case "consultant":
-      return CONSULTANT_NAV;
-    case "auditor":
-      return AUDITOR_NAV;
-    default:
-      return DEFAULT_NAV(ROLE_DASHBOARDS[role ?? ""] ?? "/contractor");
+    case "employee":      return CONTRACTOR_NAV;
+    case "client_entity": return CLIENT_NAV;
+    case "consultant":    return CONSULTANT_NAV;
+    case "auditor":       return AUDITOR_NAV;
+    default:              return DEFAULT_NAV(ROLE_DASHBOARDS[role ?? ""] ?? "/contractor");
   }
 }
 
 const demoItem: NavItem = { title: "Demo Flow", url: "/demo", icon: Presentation };
 
+const DASHBOARD_PATHS = new Set(Object.values(ROLE_DASHBOARDS));
+
 function isActive(pathname: string, url: string): boolean {
-  if (url === "/contractor" || url === "/client" || url === "/consultant" ||
-      url === "/auditor" || url === "/professional" || url === "/psc" ||
-      url === "/org" || url === "/supplier") {
-    return pathname === url;
-  }
+  if (DASHBOARD_PATHS.has(url)) return pathname === url;
   return pathname === url || pathname.startsWith(url + "/");
 }
 
